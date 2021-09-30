@@ -2,6 +2,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Button } from './Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useState } from 'react';
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import { IconButton } from './IconButton';
 
 type Inputs = {
     email: string;
@@ -28,6 +31,9 @@ const schema = yup
     .required();
 
 export function Register() {
+    const [passwordVisible, setPasswordVisible] = useState('password');
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState('password');
+
     const {
         register,
         handleSubmit,
@@ -37,6 +43,22 @@ export function Register() {
     });
 
     const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+    function handlePasswordVisible() {
+        if (passwordVisible === 'password') {
+            setPasswordVisible('text');
+        } else {
+            setPasswordVisible('password');
+        }
+    }
+
+    function handleConfirmPasswordVisible() {
+        if (confirmPasswordVisible === 'password') {
+            setConfirmPasswordVisible('text');
+        } else {
+            setConfirmPasswordVisible('password');
+        }
+    }
 
     return (
         <main className="flex flex-grow justify-center items-center">
@@ -49,11 +71,25 @@ export function Register() {
                 {errors.email && <span>{errors.email.message}</span>}
 
                 <label htmlFor="password">Password</label>
-                <input id="password" type="password" {...register('password', { required: true })} />
+                <div className="flex flex-row">
+                    <input id="password" type={passwordVisible} {...register('password', { required: true })} />
+                    <IconButton onClick={handlePasswordVisible}>
+                        {passwordVisible === 'password' ? <AiFillEye /> : <AiFillEyeInvisible />}
+                    </IconButton>
+                </div>
                 {errors.password && <span>{errors.password.message}</span>}
 
                 <label htmlFor="confirmPassword">Password</label>
-                <input id="confirmPassword" type="password" {...register('confirmPassword', { required: true })} />
+                <div className="flex flex-row">
+                    <input
+                        id="confirmPassword"
+                        type={confirmPasswordVisible}
+                        {...register('confirmPassword', { required: true })}
+                    />
+                    <IconButton onClick={handleConfirmPasswordVisible}>
+                        {confirmPasswordVisible === 'password' ? <AiFillEye /> : <AiFillEyeInvisible />}
+                    </IconButton>
+                </div>
                 {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
 
                 <Button type="submit" variant="primary">
