@@ -6,5 +6,9 @@ interface IconButtonProps {
 }
 
 export function IconButton({ children, onClick }: IconButtonProps) {
-    return <button onClick={onClick}>{children}</button>;
+    return (
+        <button onClick={onClick} type="button">
+            {children}
+        </button>
+    );
 }
