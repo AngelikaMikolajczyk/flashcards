@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input:focus-within ~ label,
+input:not(:placeholder-shown) ~ label {
+    @apply transform scale-90 -translate-y-9 text-primary;
+}

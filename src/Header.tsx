@@ -27,7 +27,7 @@ function AuthedMenu() {
                     <Link to="/">My flashcards</Link>
                 </div>
                 <div>
-                    <Link to="/">My account</Link>
+                    <Link to="/my-account">My account</Link>
                 </div>
             </nav>
             <div>
@@ -57,7 +57,7 @@ function NoAuthedMenu() {
 }
 
 export function Header() {
-    const { isAuth, setAuthState } = useContext(AuthContext);
+    const { isAuth } = useContext(AuthContext);
     return (
         <header className="flex flex-row justify-between items-center h-20 px-8 border-b-2 border-secondary text-primary shadow-md bg-white">
             <div>

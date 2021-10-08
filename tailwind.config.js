@@ -19,10 +19,18 @@ module.exports = {
                 primary: '#FF928B',
                 secondary: '#FEC3A6',
                 normal: '#030303',
+                inactive: '#D0D0D0',
             },
             borderColor: {
                 primary: '#FF928B',
                 secondary: '#FEC3A6',
+                inactive: '#D0D0D0',
+            },
+            zIndex: {
+                '-1': '-1',
+            },
+            transformOrigin: {
+                0: '0%',
             },
         },
     },

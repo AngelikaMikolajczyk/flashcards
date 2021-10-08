@@ -4,6 +4,8 @@ import { Header } from './Header';
 import { Home } from './Home';
 import { Register } from './Register';
 import { Login } from './Login';
+import { ResetPassword } from './ResetPassword';
+import { Account } from './Account';
 import { supabase } from './supabaseClient';
 
 interface AuthContextValue {
@@ -48,6 +50,12 @@ function App() {
                     </Route>
                     <Route path="/login">
                         <Login />
+                    </Route>
+                    <Route path="/reset-password">
+                        <ResetPassword />
+                    </Route>
+                    <Route path="/my-account">
+                        <Account />
                     </Route>
                     <Route path="/">
                         <Home />
