@@ -200,7 +200,7 @@ export function Account() {
                                     disabled={isConfirmPasswordDisabled}
                                 />
                                 <label
-                                    htmlFor="newPassword"
+                                    htmlFor="confirmNewPassword"
                                     className="text-base pl-4 text-inactive absolute top-3 duration-300 origin-0"
                                 >
                                     Confirm new password
