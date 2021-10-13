@@ -21,7 +21,7 @@ const authContextDefaultValue: AuthContextValue = {
 export const AuthContext = createContext<AuthContextValue>(authContextDefaultValue);
 
 function App() {
-    const [isAuth, setIsAuth] = useState(false);
+    const [isAuth, setIsAuth] = useState(supabase.auth.user() !== null);
 
     function setAuthState(isAuth: boolean) {
         setIsAuth(isAuth);
