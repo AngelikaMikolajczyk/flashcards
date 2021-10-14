@@ -86,7 +86,7 @@ export function Register() {
     return (
         <main className="flex flex-grow justify-center items-center">
             <form
-                className="w-2/5 border-2 border-secondary rounded-lg flex flex-col items-start p-11"
+                className="w-2/5 border-2 border-secondary rounded-lg flex flex-col items-start p-11 shadow-lg"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <Heading variant="primary">Register</Heading>
@@ -96,7 +96,7 @@ export function Register() {
                             id="email"
                             type="text"
                             {...register('email', { required: true })}
-                            className="border border-inactive rounded-lg h-12 p-4 focus-within:border-primary appearance-none focus:outline-none"
+                            className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus-within:border-primary appearance-none focus:outline-none"
                             placeholder=" "
                         />
                         <label
@@ -120,7 +120,7 @@ export function Register() {
                                     id="password"
                                     type={passwordVisible}
                                     {...register('password', { required: true })}
-                                    className="border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
+                                    className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
                                     placeholder=" "
                                 />
                                 <label
@@ -155,7 +155,7 @@ export function Register() {
                                     id="confirmPassword"
                                     type={confirmPasswordVisible}
                                     {...register('confirmPassword', { required: true })}
-                                    className="border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
+                                    className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
                                     placeholder=" "
                                 />
                                 <label

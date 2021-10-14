@@ -68,7 +68,7 @@ export function Login() {
     return (
         <main className="flex flex-grow justify-center items-center">
             <form
-                className="w-2/5 border-2 border-secondary rounded-lg flex flex-col items-start p-11"
+                className="w-2/5 border-2 border-secondary rounded-lg flex flex-col items-start p-11 shadow-lg"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <Heading variant="primary">Log in</Heading>
