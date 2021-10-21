@@ -1,8 +1,7 @@
-import { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button } from './Button';
-import { AuthContext } from './App';
 import { supabase } from './supabaseClient';
+import { useAuth } from './App';
 
 function AuthedMenu() {
     const history = useHistory();
@@ -21,7 +20,7 @@ function AuthedMenu() {
         <div className="flex flex-row items-center gap-10">
             <nav className="flex flex-row text-xl gap-8 text-normal border-r-2 border-secondary pr-10 h-12 items-center">
                 <div>
-                    <Link to="/">+ Create</Link>
+                    <Link to="/new-flashcard">+ Create</Link>
                 </div>
                 <div>
                     <Link to="/categories">My flashcards</Link>
@@ -31,7 +30,9 @@ function AuthedMenu() {
                 </div>
             </nav>
             <div>
-                <Button type="button" variant="secondary" children="Log out" onClick={onLogOut} />
+                <Button type="button" variant="secondary" onClick={onLogOut}>
+                    Log out
+                </Button>
             </div>
         </div>
     );
@@ -57,7 +58,7 @@ function NoAuthedMenu() {
 }
 
 export function Header() {
-    const { isAuth } = useContext(AuthContext);
+    const { isAuth } = useAuth();
     return (
         <header className="flex flex-row justify-between items-center h-20 px-8 border-b-2 border-secondary text-primary shadow-md bg-white">
             <div>
