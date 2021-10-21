@@ -24,7 +24,7 @@ function AuthedMenu() {
                     <Link to="/">+ Create</Link>
                 </div>
                 <div>
-                    <Link to="/">My flashcards</Link>
+                    <Link to="/categories">My flashcards</Link>
                 </div>
                 <div>
                     <Link to="/my-account">My account</Link>

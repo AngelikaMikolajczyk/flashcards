@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Header } from './Header';
 import { Home } from './Home';
@@ -7,6 +7,8 @@ import { Login } from './Login';
 import { ResetPassword } from './ResetPassword';
 import { Account } from './Account';
 import { supabase } from './supabaseClient';
+import { Categories } from './Categories';
+import { CreateFlashcard } from './CreateFlashcard';
 
 interface AuthContextValue {
     isAuth: boolean;
@@ -19,6 +21,10 @@ const authContextDefaultValue: AuthContextValue = {
 };
 
 export const AuthContext = createContext<AuthContextValue>(authContextDefaultValue);
+
+export function useAuth() {
+    return useContext(AuthContext);
+}
 
 function App() {
     const [isAuth, setIsAuth] = useState(supabase.auth.user() !== null);
@@ -56,6 +62,12 @@ function App() {
                     </Route>
                     <Route path="/my-account">
                         <Account />
+                    </Route>
+                    <Route path="/categories">
+                        <Categories />
+                    </Route>
+                    <Route path="/new-flashcard">
+                        <CreateFlashcard />
                     </Route>
                     <Route path="/">
                         <Home />
