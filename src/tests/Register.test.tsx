@@ -121,4 +121,19 @@ test('click Cancel button and go to home page', async () => {
     });
 });
 
+test('click log in link and go to Login page', async () => {
+    const history = createMemoryHistory();
+    render(
+        <Router history={history}>
+            <Register />
+        </Router>
+    );
+
+    fireEvent.click(screen.getByRole('link', { name: /Log in/ }));
+
+    await waitFor(() => {
+        expect(history.location.pathname).toBe('/login');
+    });
+});
+
 // TODO: testing fill Register form with valid values
