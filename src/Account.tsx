@@ -22,17 +22,20 @@ type PasswordFormInputs = {
 
 const emailFormSchema = yup
     .object({
-        email: yup.string().email(),
+        email: yup.string().email().required(),
     })
     .required();
 
 const passwordFormSchema = yup
     .object({
-        newPassword: yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,20}$/, {
-            message:
-                'password has to contains minimum 6 and maximum 20 characters, at least one letter, one number and one special character: @$!%*#?&',
-            excludeEmptyString: true,
-        }),
+        newPassword: yup
+            .string()
+            .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,20}$/, {
+                message:
+                    'password has to contains minimum 6 and maximum 20 characters, at least one letter, one number and one special character: @$!%*#?&',
+                excludeEmptyString: true,
+            })
+            .required(),
         confirmNewPassword: yup
             .string()
             .oneOf([yup.ref('newPassword')], 'passwords must match')
