@@ -31,7 +31,6 @@ test('click Logo link and go to home page', async () => {
     render(
         <Router history={history}>
             <Header />
-            {/* <Home /> */}
         </Router>
     );
 
@@ -156,7 +155,7 @@ test('click My account link and go to account info page', async () => {
     });
 });
 
-test.only('click Log out button and go to home page', async () => {
+test('click Log out button and go to home page', async () => {
     jest.spyOn(appModule, 'useAuth').mockReturnValue({ isAuth: true, setAuthState: () => null });
 
     const history = createMemoryHistory();
