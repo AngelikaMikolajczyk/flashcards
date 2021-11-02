@@ -14,12 +14,12 @@ interface FlashcardsCategoryRowProps {
 
 function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }: FlashcardsCategoryRowProps) {
     return (
-        <li key={categoryId} className="flex text-xl gap-20">
-            <span className="font-bold">{categoryName}</span>
-            <span>
+        <li key={categoryId} className="grid grid-cols-category text-xl w-full">
+            <span className="font-bold border border-primary px-10 py-6">{categoryName}</span>
+            <span className="border border-primary px-10 py-6">
                 {categoryValue ?? 0} {unit}
             </span>
-            <span className="font-bold text-secondary">
+            <span className="font-bold text-secondary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer">
                 <FaLeanpub />
                 Learn!
             </span>
@@ -38,15 +38,23 @@ export function Categories() {
                     .from('categories')
                     .select('*')
                     .eq('user_id', supabase.auth.user()?.id);
-                setCategories(categoryData ?? undefined);
+
                 if (categoryError) throw categoryError;
+
+                if (categoryData) {
+                    setCategories(categoryData);
+                }
 
                 let { data: flashcardsData, error: flashcardsError } = await supabase
                     .from('flashcards')
                     .select('*')
                     .eq('user_id', supabase.auth.user()?.id);
-                setFlashcards(flashcardsData ?? undefined);
+
                 if (flashcardsError) throw flashcardsError;
+
+                if (flashcardsData) {
+                    setFlashcards(flashcardsData);
+                }
             } catch (error) {
                 console.log(error.error_description || error.message);
             }
@@ -56,36 +64,39 @@ export function Categories() {
 
     //  Record<number, number> <==> {[category_id: number]: number}
 
-    if (!flashcards) return null;
+    const flashcardsCount =
+        flashcards?.reduce<Record<number, number>>((acc, currentValue) => {
+            if (!acc[currentValue.category_id]) {
+                acc[currentValue.category_id] = 1;
+            } else {
+                acc[currentValue.category_id] += 1;
+            }
+            return acc;
+        }, {}) ?? {};
 
-    const flashcardsCount = flashcards.reduce<Record<number, number>>((acc, currentValue) => {
-        if (!acc[currentValue.category_id]) {
-            acc[currentValue.category_id] = 1;
-        } else {
-            acc[currentValue.category_id] += 1;
-        }
-        return acc;
-    }, {});
+    if (!categories) {
+        return null;
+    }
 
     return (
-        <main className="flex flex-grow flex-col items-center mx-auto w-2/5 pt-14">
+        <main className="flex flex-grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">Your FlashCards categories</Heading>
-            {!categories ? (
-                <>
+            {categories.length === 0 ? (
+                <div className="flex flex-col gap-8 my-16 text-xl">
                     <div className="flex gap-2 items-center">
                         <span>You don't have any flashcards yet</span>
                         <FaRegSadCry />
                     </div>
                     <div>
                         Go and create your first flashcard{' '}
-                        <Link to="/" className="text-primary font-bold">
+                        <Link to="/new-flashcard" className="text-primary font-bold">
                             here
                         </Link>
                     </div>
-                </>
+                </div>
             ) : (
-                <div className="w-2/5 my-10">
-                    <ul className="flex flex-col gap-10">
+                <div className="my-10">
+                    <ul className="flex flex-col border-2 border-primary">
                         {categories.map((category) => {
                             return (
                                 <FlashcardsCategoryRow

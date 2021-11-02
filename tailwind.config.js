@@ -32,6 +32,9 @@ module.exports = {
             transformOrigin: {
                 0: '0%',
             },
+            gridTemplateColumns: {
+                category: 'minmax(0, 2fr) repeat(2, minmax(0, 1fr))',
+            },
         },
     },
     variants: {
