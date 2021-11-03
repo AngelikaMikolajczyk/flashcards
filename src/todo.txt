@@ -2,3 +2,4 @@ TODO
 
 * info po założeniu konta
 * info po zalogowaniu
+* możliwość usunięcia całej kategorii
