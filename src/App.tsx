@@ -9,6 +9,7 @@ import { Account } from './Account';
 import { supabase } from './supabaseClient';
 import { Categories } from './Categories';
 import { CreateFlashcard } from './CreateFlashcard';
+import { Flashcards } from './Flashcards';
 
 interface AuthContextValue {
     isAuth: boolean;
@@ -65,6 +66,9 @@ function App() {
                     </Route>
                     <Route path="/categories">
                         <Categories />
+                    </Route>
+                    <Route path="/category/:categoryname">
+                        <Flashcards />
                     </Route>
                     <Route path="/new-flashcard">
                         <CreateFlashcard />

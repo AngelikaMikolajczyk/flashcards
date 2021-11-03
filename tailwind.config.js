@@ -25,6 +25,10 @@ module.exports = {
                 primary: '#FF928B',
                 secondary: '#FEC3A6',
                 inactive: '#D0D0D0',
+                'dark-grey': '#666666',
+            },
+            borderWidth: {
+                1: '1px',
             },
             zIndex: {
                 '-1': '-1',
@@ -34,6 +38,7 @@ module.exports = {
             },
             gridTemplateColumns: {
                 category: 'minmax(0, 2fr) repeat(2, minmax(0, 1fr))',
+                flashcard: 'minmax(0, 0.5fr) repeat(2, minmax(0, 2fr)) repeat(2, minmax(0, 1fr))',
             },
         },
     },

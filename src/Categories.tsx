@@ -15,7 +15,12 @@ interface FlashcardsCategoryRowProps {
 function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }: FlashcardsCategoryRowProps) {
     return (
         <li key={categoryId} className="grid grid-cols-category text-xl w-full">
-            <span className="font-bold border border-primary px-10 py-6">{categoryName}</span>
+            <Link
+                to={{ pathname: '/category/' + categoryName, state: { categoryId: categoryId } }}
+                className="font-bold border border-primary px-10 py-6"
+            >
+                {categoryName}
+            </Link>
             <span className="border border-primary px-10 py-6">
                 {categoryValue ?? 0} {unit}
             </span>
