@@ -14,7 +14,7 @@ interface FlashcardsCategoryRowProps {
 
 function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }: FlashcardsCategoryRowProps) {
     return (
-        <li key={categoryId} className="grid grid-cols-category text-xl w-full">
+        <li className="grid grid-cols-category text-xl w-full">
             <Link
                 to={{ pathname: '/category/' + categoryName, state: { categoryId: categoryId } }}
                 className="font-bold border border-primary px-10 py-6"
@@ -111,6 +111,7 @@ export function Categories() {
                                     unit={
                                         flashcardsCount ? (flashcardsCount[category.id] === 1 ? 'item' : 'items') : null
                                     }
+                                    key={category.id}
                                 />
                             );
                         })}
