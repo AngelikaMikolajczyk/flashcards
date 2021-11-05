@@ -12,6 +12,11 @@ interface FlashcardsCategoryRowProps {
     unit: 'item' | 'items' | null;
 }
 
+type UnknownError = {
+    error_description?: string;
+    message?: string;
+};
+
 function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }: FlashcardsCategoryRowProps) {
     return (
         <li className="grid grid-cols-category text-xl w-full">
@@ -61,7 +66,8 @@ export function Categories() {
                     setFlashcards(flashcardsData);
                 }
             } catch (error) {
-                console.log(error.error_description || error.message);
+                const supabaseError = error as UnknownError;
+                console.log(supabaseError.error_description || supabaseError.message);
             }
         }
         fetchCategories();

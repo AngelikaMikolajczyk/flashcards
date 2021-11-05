@@ -20,6 +20,11 @@ type PasswordFormInputs = {
     confirmNewPassword: string;
 };
 
+type UnknownError = {
+    error_description?: string;
+    message?: string;
+};
+
 const emailFormSchema = yup
     .object({
         email: yup.string().email().required(),
@@ -85,7 +90,8 @@ function EmailForm() {
             }
             if (updateError) throw updateError;
         } catch (error) {
-            console.log(error.error_description || error.message);
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
         }
     };
 
@@ -143,7 +149,8 @@ function PasswordForm() {
 
             if (updateError) throw updateError;
         } catch (error) {
-            console.log(error.error_description || error.message);
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
         }
     };
 

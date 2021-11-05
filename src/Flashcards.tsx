@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaEdit, FaReply, FaTrashAlt } from 'react-icons/fa';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button } from './Button';
 import { Heading } from './Heading';
 import { supabase } from './supabaseClient';
@@ -34,21 +34,37 @@ function FlashcardsRow({ itemNumber, front, back, onDelete }: FlashcardsRowProps
     );
 }
 
-export function Flashcards() {
-    let { categoryname } = useParams();
-    let location = useLocation();
-    let [flashcards, setFlashcards] = useState<{ id: number; front: string; back: string }[] | undefined>();
+type UnknownError = {
+    error_description?: string;
+    message?: string;
+};
 
-    async function handleDelete(flashcardId) {
+export function Flashcards() {
+    let { categoryname } = useParams<{ categoryname: string }>();
+    let location = useLocation<{ categoryId: number }>();
+    let [flashcards, setFlashcards] = useState<{ id: number; front: string; back: string }[] | undefined>();
+    const history = useHistory();
+
+    async function handleDelete(flashcardId: number) {
         try {
             const { data, error } = await supabase.from('flashcards').delete().eq('id', flashcardId);
             setFlashcards((flashcards) => {
                 return flashcards?.filter((flashcard) => flashcard.id !== flashcardId);
             });
-            console.log(data);
+
+            if (error) throw error;
         } catch (error) {
-            console.log(error.error_description || error.message);
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
         }
+    }
+
+    function handleAdd() {
+        history.push('/');
+    }
+
+    function handleLearn() {
+        history.push('/');
     }
 
     useEffect(() => {
@@ -62,9 +78,12 @@ export function Flashcards() {
 
                 if (error) throw error;
 
-                setFlashcards(flashcardsData);
+                if (flashcardsData) {
+                    setFlashcards(flashcardsData);
+                }
             } catch (error) {
-                console.log(error.error_description || error.message);
+                const supabaseError = error as UnknownError;
+                console.log(supabaseError.error_description || supabaseError.message);
             }
         }
         fetchFlashcards();
@@ -98,10 +117,10 @@ export function Flashcards() {
                         })}
                     </ul>
                     <div className="mt-10 flex gap-4">
-                        <Button type="button" variant="primary">
+                        <Button type="button" variant="primary" onClick={handleAdd}>
                             + Add
                         </Button>
-                        <Button type="button" variant="secondary">
+                        <Button type="button" variant="secondary" onClick={handleLearn}>
                             Learn!
                         </Button>
                     </div>
@@ -109,7 +128,7 @@ export function Flashcards() {
             ) : (
                 <div className="my-32 flex flex-col items-center gap-8">
                     <div className="font-semibold text-2xl">You don't have any flashcards in this category...</div>
-                    <Button type="button" variant="primary">
+                    <Button type="button" variant="primary" onClick={handleAdd}>
                         + Add first flashcard in this category
                     </Button>
                 </div>

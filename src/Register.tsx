@@ -17,6 +17,11 @@ type Inputs = {
     confirmPassword: string;
 };
 
+type UnknownError = {
+    error_description?: string;
+    message?: string;
+};
+
 const schema = yup
     .object({
         email: yup.string().email().required(),
@@ -59,7 +64,8 @@ export function Register() {
             // user return data like: email, email_change_confirm_status, id
             if (error) throw error;
         } catch (error) {
-            console.log(error.error_description || error.message);
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
         }
     };
 

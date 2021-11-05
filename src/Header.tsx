@@ -3,6 +3,11 @@ import { Button } from './Button';
 import { supabase } from './supabaseClient';
 import { useAuth } from './App';
 
+type UnknownError = {
+    error_description?: string;
+    message?: string;
+};
+
 function AuthedMenu() {
     const history = useHistory();
 
@@ -12,7 +17,8 @@ function AuthedMenu() {
             history.push('/');
             if (error) throw error;
         } catch (error) {
-            console.log(error.error_description || error.message);
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
         }
     }
 

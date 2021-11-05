@@ -16,6 +16,11 @@ type Inputs = {
     password: string;
 };
 
+type UnknownError = {
+    error_description?: string;
+    message?: string;
+};
+
 const schema = yup
     .object({
         email: yup.string().required(),
@@ -25,7 +30,7 @@ const schema = yup
 
 export function Login() {
     const [passwordVisible, setPasswordVisible] = useState('password');
-    const [submitErrorMessage, setSubmitErrorMessage] = useState(null);
+    const [submitErrorMessage, setSubmitErrorMessage] = useState<string | null>(null);
     const history = useHistory();
 
     const {
@@ -48,8 +53,11 @@ export function Login() {
             if (error) throw error;
             history.push('/');
         } catch (error) {
-            console.log(error.error_description || error.message);
-            setSubmitErrorMessage(error.error_description?.toString() || error.message?.toString());
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
+            setSubmitErrorMessage(
+                (supabaseError.error_description?.toString() || supabaseError.message?.toString()) ?? null
+            );
         }
     };
 
