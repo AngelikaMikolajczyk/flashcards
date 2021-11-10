@@ -14,6 +14,8 @@ module.exports = {
             backgroundColor: {
                 primary: '#FF928B',
                 pattern: '#FFF9F5',
+                secondary: '#ffeee6',
+                selecting: '#f2f2f2',
             },
             textColor: {
                 primary: '#FF928B',
@@ -29,9 +31,13 @@ module.exports = {
             },
             borderWidth: {
                 1: '1px',
+                3: '3px',
             },
             zIndex: {
                 '-1': '-1',
+            },
+            ringColor: {
+                primary: '#FF928B',
             },
             transformOrigin: {
                 0: '0%',

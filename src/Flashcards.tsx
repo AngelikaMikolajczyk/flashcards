@@ -47,7 +47,7 @@ export function Flashcards() {
 
     async function handleDelete(flashcardId: number) {
         try {
-            const { data, error } = await supabase.from('flashcards').delete().eq('id', flashcardId);
+            const { error } = await supabase.from('flashcards').delete().eq('id', flashcardId);
             setFlashcards((flashcards) => {
                 return flashcards?.filter((flashcard) => flashcard.id !== flashcardId);
             });
@@ -87,7 +87,7 @@ export function Flashcards() {
             }
         }
         fetchFlashcards();
-    }, []);
+    }, [location.state.categoryId]);
 
     if (!flashcards) return null;
 
