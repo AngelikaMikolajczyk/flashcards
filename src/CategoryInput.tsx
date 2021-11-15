@@ -1,14 +1,15 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { IconButton } from './IconButton';
 
 interface CategoryInputProps {
     categoryNames: string[];
     formProps: UseFormRegisterReturn;
+    setValue: UseFormSetValue<{ category: string }>;
 }
 
-export function CategoryInput({ categoryNames, formProps }: CategoryInputProps) {
+export function CategoryInput({ categoryNames, formProps, setValue }: CategoryInputProps) {
     const [isListVisible, setIsListVisible] = useState<boolean>(false);
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number>(0);
@@ -53,6 +54,10 @@ export function CategoryInput({ categoryNames, formProps }: CategoryInputProps) 
             form?.removeEventListener('reset', handleFormReset);
         };
     }, []);
+
+    useEffect(() => {
+        setValue('category', selectedCategory);
+    }, [selectedCategory]);
 
     function handleSelectCategory(categoryName: string) {
         setSelectedCategory(categoryName);

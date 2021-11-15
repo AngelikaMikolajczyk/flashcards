@@ -1,7 +1,7 @@
 import { Heading } from './Heading';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { ErrorMessage } from './ErrorMessage';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
@@ -36,9 +36,53 @@ export function CreateFlashcard() {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
     } = useForm<Inputs>({
         resolver: yupResolver(schema),
     });
+
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+            let namesArray = categories?.map((category) => category.name);
+
+            let indexOfCategory = namesArray?.findIndex((name) => name === data.category);
+
+            if (indexOfCategory && indexOfCategory < 0) {
+                const { data: categoryData, error: categoryError } = await supabase
+                    .from('categories')
+                    .insert([{ user_id: supabase.auth.user()?.id, name: data.category }]);
+
+                if (categoryError) throw categoryError;
+
+                if (categoryData) {
+                    const { error: flashcardError } = await supabase.from('flashcards').insert([
+                        {
+                            front: data.front,
+                            back: data.back,
+                            user_id: supabase.auth.user()?.id,
+                            category_id: categoryData[0].id,
+                        },
+                    ]);
+
+                    if (flashcardError) throw flashcardError;
+                }
+            } else {
+                let category = categories?.find((category) => category.name === data.category);
+                const { error: flashcardError } = await supabase.from('flashcards').insert([
+                    {
+                        front: data.front,
+                        back: data.back,
+                        user_id: supabase.auth.user()?.id,
+                        category_id: category?.id,
+                    },
+                ]);
+                if (flashcardError) throw flashcardError;
+            }
+        } catch (error) {
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
+        }
+    };
 
     useEffect(() => {
         async function fetchCategoriesData() {
@@ -64,7 +108,7 @@ export function CreateFlashcard() {
     return (
         <main className="flex flex-grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">Create FlashCard</Heading>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-10  p-20">
                     <div className="flex justify-center gap-8">
                         <div className="flex flex-col">
@@ -116,6 +160,7 @@ export function CreateFlashcard() {
                                     : []
                             }
                             formProps={register('category', { required: true })}
+                            setValue={setValue}
                         />
                         {errors.category && errors.category.message && (
                             <ErrorMessage

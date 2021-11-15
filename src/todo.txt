@@ -3,3 +3,5 @@ TODO
 * info po założeniu konta
 * info po zalogowaniu
 * możliwość usunięcia całej kategorii
+* info że konto na dany email istnieje jeśli jest próba rejestracji na emaila który ma konto
+* zmiana podejścia do kontrolowanego inputa categorii
