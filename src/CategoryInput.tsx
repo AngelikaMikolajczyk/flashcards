@@ -40,6 +40,20 @@ export function CategoryInput({ categoryNames, formProps }: CategoryInputProps) 
         }
     }, [activeSuggestionIndex, isListVisible]);
 
+    useEffect(() => {
+        const form = inputRef.current?.closest('form');
+        const handleFormReset = () => {
+            setSelectedCategory('');
+            setActiveSuggestionIndex(0);
+            setIsListVisible(false);
+        };
+        form?.addEventListener('reset', handleFormReset);
+
+        return () => {
+            form?.removeEventListener('reset', handleFormReset);
+        };
+    }, []);
+
     function handleSelectCategory(categoryName: string) {
         setSelectedCategory(categoryName);
         setIsListVisible(false);
