@@ -1,9 +1,10 @@
 import { Heading } from './Heading';
-import { FaRegSadCry } from 'react-icons/fa';
+import { FaRegQuestionCircle, FaRegSadCry, FaTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import { FaLeanpub } from 'react-icons/fa';
+import ReactTooltip from 'react-tooltip';
 
 interface FlashcardsCategoryRowProps {
     categoryName: string;
@@ -32,6 +33,24 @@ function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }
             <span className="font-bold text-secondary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer">
                 <FaLeanpub />
                 Learn!
+            </span>
+            <span className="relative font-bold text-primary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer">
+                <FaTrashAlt />
+                Delete
+                <span className="absolute top-5 right-6">
+                    <p data-tip data-for="deleteCategory">
+                        <FaRegQuestionCircle className="w-3" />
+                    </p>
+                    <ReactTooltip
+                        id="deleteCategory"
+                        className="custom-color-no-arrow"
+                        textColor="#FFFFFF"
+                        backgroundColor="#FF928B"
+                        effect="solid"
+                    >
+                        <span>Delete category and all flashcards within</span>
+                    </ReactTooltip>
+                </span>
             </span>
         </li>
     );
