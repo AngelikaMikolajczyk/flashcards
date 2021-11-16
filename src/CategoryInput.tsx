@@ -120,7 +120,7 @@ export function CategoryInput({ categoryNames, formProps, setValue }: CategoryIn
                         style={{ textIndent: '1.5px' }}
                     />
                 </div>
-                {isListVisible ? (
+                {isListVisible && filteredCategories.length > 0 ? (
                     <ul className="absolute border-2 border-secondary w-72 rounded-lg overflow-y-auto max-h-32 bg-white py-1 text-xl font-sriracha text-normal text-opacity-60">
                         {filteredCategories.map((categoryName, index) => {
                             return (
