@@ -2,11 +2,10 @@ TODO
 
 * info po założeniu konta
 * info po zalogowaniu
-* możliwość usunięcia całej kategorii
 * info że konto na dany email istnieje jeśli jest próba rejestracji na emaila który ma konto
 * zmiana podejścia do kontrolowanego inputa categorii
 * naprawić pustą listę kategorii przy wpisywaniu nowej
 * dodawanie nowej fiszki do kategorii z widoku listy fiszek w danej kategorii - czyli nie maa możliości innej kategorii, 
 tylko tej z której się wyszło
 * edycja fiszki - kategoria zostaje na sztywno ta sama, ale mamy wypełnione pola front i back do edycji
-* tooltip wyjaśnienie delete w kategoriach
+* odświeżanie strony po dodaniu fiszki

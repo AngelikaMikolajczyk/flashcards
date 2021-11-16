@@ -5,12 +5,14 @@ import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import { FaLeanpub } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
+import { IconButton } from './IconButton';
 
 interface FlashcardsCategoryRowProps {
     categoryName: string;
     categoryId: number;
     categoryValue: number;
     unit: 'item' | 'items' | null;
+    onDelete: () => void;
 }
 
 type UnknownError = {
@@ -18,7 +20,30 @@ type UnknownError = {
     message?: string;
 };
 
-function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }: FlashcardsCategoryRowProps) {
+function FlashcardsCategoryRow({
+    categoryName,
+    categoryId,
+    categoryValue,
+    unit,
+    onDelete,
+}: FlashcardsCategoryRowProps) {
+    async function handleDeleteCategory() {
+        try {
+            const { error: flashcardsError } = await supabase.from('flashcards').delete().eq('category_id', categoryId);
+
+            if (flashcardsError) throw flashcardsError;
+
+            const { error } = await supabase.from('categories').delete().eq('id', categoryId);
+
+            if (error) throw error;
+
+            onDelete();
+        } catch (error) {
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
+        }
+    }
+
     return (
         <li className="grid grid-cols-category text-xl w-full">
             <Link
@@ -34,7 +59,10 @@ function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }
                 <FaLeanpub />
                 Learn!
             </span>
-            <span className="relative font-bold text-primary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer">
+            <IconButton
+                className="relative font-bold text-primary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
+                onClick={handleDeleteCategory}
+            >
                 <FaTrashAlt />
                 Delete
                 <span className="absolute top-5 right-6">
@@ -51,7 +79,7 @@ function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }
                         <span>Delete category and all flashcards within</span>
                     </ReactTooltip>
                 </span>
-            </span>
+            </IconButton>
         </li>
     );
 }
@@ -59,6 +87,7 @@ function FlashcardsCategoryRow({ categoryName, categoryId, categoryValue, unit }
 export function Categories() {
     const [categories, setCategories] = useState<{ name: string; id: number }[] | undefined>();
     const [flashcards, setFlashcards] = useState<{ id: number; category_id: number }[] | undefined>();
+    const [dateNow, setDateNow] = useState<Date>(new Date());
 
     useEffect(() => {
         async function fetchCategories() {
@@ -90,7 +119,11 @@ export function Categories() {
             }
         }
         fetchCategories();
-    }, []);
+    }, [dateNow]);
+
+    function updateDateState() {
+        setDateNow(new Date());
+    }
 
     //  Record<number, number> <==> {[category_id: number]: number}
 
@@ -137,6 +170,7 @@ export function Categories() {
                                         flashcardsCount ? (flashcardsCount[category.id] === 1 ? 'item' : 'items') : null
                                     }
                                     key={category.id}
+                                    onDelete={updateDateState}
                                 />
                             );
                         })}
