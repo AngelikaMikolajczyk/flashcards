@@ -4,7 +4,5 @@ TODO
 * info po zalogowaniu
 * info że konto na dany email istnieje jeśli jest próba rejestracji na emaila który ma konto
 * zmiana podejścia do kontrolowanego inputa categorii
-* dodawanie nowej fiszki do kategorii z widoku listy fiszek w danej kategorii - czyli nie maa możliości innej kategorii, 
-tylko tej z której się wyszło
 * edycja fiszki - kategoria zostaje na sztywno ta sama, ale mamy wypełnione pola front i back do edycji
 * dodanie nauki fiszek

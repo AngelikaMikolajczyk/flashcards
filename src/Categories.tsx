@@ -47,7 +47,7 @@ function FlashcardsCategoryRow({
     return (
         <li className="grid grid-cols-category text-xl w-full">
             <Link
-                to={{ pathname: '/category/' + categoryName, state: { categoryId: categoryId } }}
+                to={{ pathname: '/categories/' + categoryName, state: { categoryId: categoryId } }}
                 className="font-bold border border-primary px-10 py-6"
             >
                 {categoryName}

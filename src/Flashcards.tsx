@@ -60,7 +60,7 @@ export function Flashcards() {
     }
 
     function handleAdd() {
-        history.push('/');
+        history.push('/categories/' + categoryname + '/new-flashcard');
     }
 
     function handleLearn() {
