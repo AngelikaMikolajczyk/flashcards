@@ -4,5 +4,13 @@ TODO
 * info po zalogowaniu
 * info że konto na dany email istnieje jeśli jest próba rejestracji na emaila który ma konto
 * zmiana podejścia do kontrolowanego inputa categorii
-* edycja fiszki - kategoria zostaje na sztywno ta sama, ale mamy wypełnione pola front i back do edycji
+* edycja fiszki - kategoria zostaje na sztywno ta sama, ale mamy wypełnione pola front i back do edycji i nie można 
+    zapisać jeśli faktycznie nie dokonano zmian
 * dodanie nauki fiszek
+* dark theme
+* przypomnienie hasła
+* zbudowanie własnego Linku
+* właśny komponent dla wyświetlenia front i back inputów
+* ogarnąć errory
+* testy
+* wyświetlanie toastera po edycji fiszki

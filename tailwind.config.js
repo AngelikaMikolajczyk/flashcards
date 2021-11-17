@@ -16,6 +16,7 @@ module.exports = {
                 pattern: '#FFF9F5',
                 secondary: '#ffeee6',
                 selecting: '#f2f2f2',
+                inactive: '#D0D0D0',
             },
             textColor: {
                 primary: '#FF928B',

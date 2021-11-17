@@ -10,19 +10,36 @@ interface FlashcardsRowProps {
     front: string;
     back: string;
     onDelete: () => void;
+    categoryname: string;
+    flashcardId: number;
+    categoryId: number;
 }
 
-function FlashcardsRow({ itemNumber, front, back, onDelete }: FlashcardsRowProps) {
+function FlashcardsRow({
+    itemNumber,
+    front,
+    back,
+    onDelete,
+    categoryname,
+    flashcardId,
+    categoryId,
+}: FlashcardsRowProps) {
     return (
         <li className="grid grid-cols-flashcard text-xl w-full">
             <span className="border-1 border-dark-grey px-10 py-6">{itemNumber}.</span>
             <span className="font-sriracha text-primary border-1 border-dark-grey px-10 py-6">{front}</span>
             <span className="font-sriracha text-primary border-1 border-dark-grey px-10 py-6">{back}</span>
             <span className="border-1 border-dark-grey px-10 py-6 flex gap-4 items-center cursor-pointer">
-                <Button type="button" variant="tertiary">
+                <Link
+                    to={{
+                        pathname: '/categories/' + categoryname + '/edit-flashcard',
+                        state: { flashcardId: flashcardId, front: front, back: back, categoryId: categoryId },
+                    }}
+                    className="flex gap-4 items-center"
+                >
                     <FaEdit className="text-secondary mb-1" />
                     Edit
-                </Button>
+                </Link>
             </span>
             <span className="border-1 border-dark-grey px-10 py-6">
                 <Button type="button" variant="tertiary" onClick={onDelete}>
@@ -112,6 +129,9 @@ export function Flashcards() {
                                     back={flashcard.back}
                                     key={flashcard.id}
                                     onDelete={() => handleDelete(flashcard.id)}
+                                    categoryname={categoryname}
+                                    flashcardId={flashcard.id}
+                                    categoryId={location.state.categoryId}
                                 />
                             );
                         })}
