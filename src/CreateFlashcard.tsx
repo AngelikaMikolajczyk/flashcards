@@ -9,6 +9,8 @@ import { FaReply } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import { CategoryInput } from './CategoryInput';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Inputs = {
     front: string;
@@ -32,11 +34,14 @@ const schema = yup
 export function CreateFlashcard() {
     const [categories, setCategories] = useState<{ name: string; id: number }[] | undefined>();
 
+    const notify = () => toast('Your flashcard has been added successfully!');
+
     const {
         register,
         handleSubmit,
         formState: { errors },
         setValue,
+        reset,
     } = useForm<Inputs>({
         resolver: yupResolver(schema),
     });
@@ -78,6 +83,8 @@ export function CreateFlashcard() {
                 ]);
                 if (flashcardError) throw flashcardError;
             }
+            reset();
+            notify();
         } catch (error) {
             const supabaseError = error as UnknownError;
             console.log(supabaseError.error_description || supabaseError.message);
@@ -183,6 +190,14 @@ export function CreateFlashcard() {
                 <FaReply />
                 <span>Back to the flashcards category list</span>
             </Link>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={2500}
+                hideProgressBar={true}
+                closeOnClick={false}
+                closeButton={false}
+                toastClassName={() => 'bg-primary text-white font-semibold rounded text-center p-1 bg-opacity-90'}
+            />
         </main>
     );
 }
