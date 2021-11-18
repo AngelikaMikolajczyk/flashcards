@@ -55,10 +55,13 @@ function FlashcardsCategoryRow({
             <span className="border border-primary px-10 py-6">
                 {categoryValue ?? 0} {unit}
             </span>
-            <span className="font-bold text-secondary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer">
+            <Link
+                to={'/learning/' + categoryName}
+                className="font-bold text-secondary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
+            >
                 <FaLeanpub />
                 Learn!
-            </span>
+            </Link>
             <IconButton
                 className="relative font-bold text-primary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
                 onClick={handleDeleteCategory}

@@ -140,9 +140,12 @@ export function Flashcards() {
                         <Button type="button" variant="primary" onClick={handleAdd}>
                             + Add
                         </Button>
-                        <Button type="button" variant="secondary" onClick={handleLearn}>
+                        <Link
+                            to={'/learning/' + categoryname}
+                            className="text-xl z-10 rounded-xl bg-transparent px-3.5 py-1.5 border-2 border-primary text-normal text-opacity-60"
+                        >
                             Learn!
-                        </Button>
+                        </Link>
                     </div>
                 </div>
             ) : (

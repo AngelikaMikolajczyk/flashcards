@@ -12,6 +12,7 @@ import { CreateFlashcard } from './CreateFlashcard';
 import { Flashcards } from './Flashcards';
 import { CreateFlashcardForCategory } from './CreateFlashcardForCategory';
 import { EditFlashcard } from './EditFlashcard';
+import { Learning } from './Learning';
 
 interface AuthContextValue {
     isAuth: boolean;
@@ -80,6 +81,9 @@ function App() {
                     </Route>
                     <Route path="/new-flashcard">
                         <CreateFlashcard />
+                    </Route>
+                    <Route path="/learning/:categoryname">
+                        <Learning />
                     </Route>
                     <Route path="/">
                         <Home />
