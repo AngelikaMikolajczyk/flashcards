@@ -80,10 +80,6 @@ export function Flashcards() {
         history.push('/categories/' + categoryname + '/new-flashcard');
     }
 
-    function handleLearn() {
-        history.push('/');
-    }
-
     useEffect(() => {
         async function fetchFlashcards() {
             try {
@@ -141,7 +137,10 @@ export function Flashcards() {
                             + Add
                         </Button>
                         <Link
-                            to={'/learning/' + categoryname}
+                            to={{
+                                pathname: '/learning/' + categoryname,
+                                state: { categoryId: location.state.categoryId },
+                            }}
                             className="text-xl z-10 rounded-xl bg-transparent px-3.5 py-1.5 border-2 border-primary text-normal text-opacity-60"
                         >
                             Learn!

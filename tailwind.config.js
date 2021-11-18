@@ -17,6 +17,8 @@ module.exports = {
                 secondary: '#ffeee6',
                 selecting: '#f2f2f2',
                 inactive: '#D0D0D0',
+                success: '#b3d98c',
+                failed: '#efefae',
             },
             textColor: {
                 primary: '#FF928B',
@@ -29,6 +31,8 @@ module.exports = {
                 secondary: '#FEC3A6',
                 inactive: '#D0D0D0',
                 'dark-grey': '#666666',
+                success: '#49862d',
+                failed: '#aa9d22',
             },
             borderWidth: {
                 1: '1px',

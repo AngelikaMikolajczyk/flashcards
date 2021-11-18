@@ -56,7 +56,7 @@ function FlashcardsCategoryRow({
                 {categoryValue ?? 0} {unit}
             </span>
             <Link
-                to={'/learning/' + categoryName}
+                to={{ pathname: '/learning/' + categoryName, state: { categoryId: categoryId } }}
                 className="font-bold text-secondary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
             >
                 <FaLeanpub />
