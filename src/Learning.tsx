@@ -10,12 +10,18 @@ type UnknownError = {
     message?: string;
 };
 
+type Site = 'front' | 'back';
+
 export function Learning() {
     const { categoryname } = useParams<{ categoryname: string }>();
     let [flashcards, setFlashcards] = useState<
         { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean }[] | undefined
     >();
     let location = useLocation<{ categoryId: number }>();
+    const [site, setSite] = useState<Site>('front');
+    let [currentFlashcard, setCurrentFlascard] = useState<
+        { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean } | undefined
+    >();
 
     useEffect(() => {
         async function fetchFlashcards() {
@@ -30,6 +36,7 @@ export function Learning() {
 
                 if (data) {
                     setFlashcards(data);
+                    setCurrentFlascard(data[0]);
                 }
             } catch (error) {
                 const supabaseError = error as UnknownError;
@@ -49,6 +56,21 @@ export function Learning() {
         flashcards: { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean }[]
     ) {
         return flashcards.filter((flashcard) => flashcard.is_known === true);
+    }
+
+    function handleTurnFlashcard() {
+        if (site === 'front') {
+            setSite('back');
+        } else {
+            setSite('front');
+        }
+    }
+
+    function handleShuffleFalshcard() {
+        const index = Math.floor(Math.random() * flashcards?.length);
+
+        setCurrentFlascard(flashcards[index]);
+        setSite('front');
     }
 
     return (
@@ -92,22 +114,22 @@ export function Learning() {
                 </span>
             </div>
             <div className="flex flex-col w-full items-center py-8">
-                <span className="font-semibold text-normal text-opacity-60 text-xl">front:</span>
+                <span className="font-semibold text-normal text-opacity-60 text-xl">{site}:</span>
                 <span className="text-3xl font-sriracha border-2 border-secondary rounded-xl p-4 w-2/3 text-center py-12">
-                    study
+                    {currentFlashcard ? currentFlashcard[site] : null}
                 </span>
             </div>
             <div className="grid grid-cols-2 w-full gap-4 justify-items-center py-8">
-                <Button type="button" variant="primary">
+                <Button type="button" variant="primary" onClick={handleTurnFlashcard}>
                     Turn
                 </Button>
-                <Button type="button" variant="secondary">
+                <Button type="button" variant="secondary" onClick={handleShuffleFalshcard}>
                     Shuffle
                 </Button>
-                <Button type="button" variant="success">
+                <Button type="button" variant={site === 'front' ? 'disabled' : 'success'}>
                     I know
                 </Button>
-                <Button type="button" variant="failed">
+                <Button type="button" variant={site === 'front' ? 'disabled' : 'failed'}>
                     I don't know
                 </Button>
             </div>
