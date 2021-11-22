@@ -19,7 +19,7 @@ export function Learning() {
     >();
     let location = useLocation<{ categoryId: number }>();
     const [site, setSite] = useState<Site>('front');
-    let [currentFlashcard, setCurrentFlascard] = useState<
+    let [currentFlashcard, setCurrentFlashcard] = useState<
         { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean } | undefined
     >();
 
@@ -36,7 +36,9 @@ export function Learning() {
 
                 if (data) {
                     setFlashcards(data);
-                    setCurrentFlascard(data[0]);
+                    if (!currentFlashcard) {
+                        setCurrentFlashcard(data[0]);
+                    }
                 }
             } catch (error) {
                 const supabaseError = error as UnknownError;
@@ -44,7 +46,7 @@ export function Learning() {
             }
         }
         fetchFlashcards();
-    }, [location.state.categoryId]);
+    }, [currentFlashcard, location.state.categoryId]);
 
     function reviewedFlashcardsCount(
         flashcards: { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean }[]
@@ -59,17 +61,32 @@ export function Learning() {
     }
 
     function handleTurnFlashcard() {
+        async function setFlashcardIsReviewed() {
+            try {
+                const { error } = await supabase
+                    .from('flashcards')
+                    .update({ is_reviewed: true })
+                    .eq('id', currentFlashcard?.id);
+
+                if (error) throw error;
+            } catch (error) {
+                const supabaseError = error as UnknownError;
+                console.log(supabaseError.error_description || supabaseError.message);
+            }
+        }
         if (site === 'front') {
             setSite('back');
+            setFlashcardIsReviewed();
         } else {
             setSite('front');
         }
+        console.log(currentFlashcard);
     }
 
     function handleShuffleFalshcard() {
         const index = Math.floor(Math.random() * flashcards?.length);
 
-        setCurrentFlascard(flashcards[index]);
+        setCurrentFlashcard(flashcards[index]);
         setSite('front');
     }
 
@@ -115,7 +132,11 @@ export function Learning() {
             </div>
             <div className="flex flex-col w-full items-center py-8">
                 <span className="font-semibold text-normal text-opacity-60 text-xl">{site}:</span>
-                <span className="text-3xl font-sriracha border-2 border-secondary rounded-xl p-4 w-2/3 text-center py-12">
+                <span
+                    className={`text-3xl text-normal text-opacity-80 font-sriracha border-3 border-secondary rounded-xl p-4 w-2/3 text-center py-12 ${
+                        site === 'front' ? 'bg-flashcard' : 'bg-secondary'
+                    }`}
+                >
                     {currentFlashcard ? currentFlashcard[site] : null}
                 </span>
             </div>

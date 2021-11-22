@@ -19,6 +19,7 @@ module.exports = {
                 inactive: '#D0D0D0',
                 success: '#b3d98c',
                 failed: '#efefae',
+                flashcard: '#ffdccc',
             },
             textColor: {
                 primary: '#FF928B',
