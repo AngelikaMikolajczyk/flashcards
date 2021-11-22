@@ -10,7 +10,7 @@ type UnknownError = {
     message?: string;
 };
 
-type Site = 'front' | 'back';
+type Site = 'front' | 'back' | 'frontForTheFirstTime';
 
 export function Learning() {
     const { categoryname } = useParams<{ categoryname: string }>();
@@ -18,7 +18,7 @@ export function Learning() {
         { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean }[] | undefined
     >();
     let location = useLocation<{ categoryId: number }>();
-    const [site, setSite] = useState<Site>('front');
+    const [site, setSite] = useState<Site>('frontForTheFirstTime');
     let [currentFlashcard, setCurrentFlashcard] = useState<
         { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean } | undefined
     >();
@@ -74,20 +74,72 @@ export function Learning() {
                 console.log(supabaseError.error_description || supabaseError.message);
             }
         }
-        if (site === 'front') {
+        if (site === 'frontForTheFirstTime') {
             setSite('back');
             setFlashcardIsReviewed();
-        } else {
+        } else if (site === 'back') {
             setSite('front');
+        } else {
+            setSite('back');
         }
-        console.log(currentFlashcard);
+    }
+
+    function drawIndexNumber() {
+        return Math.floor(Math.random() * flashcards?.length);
     }
 
     function handleShuffleFalshcard() {
-        const index = Math.floor(Math.random() * flashcards?.length);
+        const index = drawIndexNumber();
 
         setCurrentFlashcard(flashcards[index]);
-        setSite('front');
+        setSite('frontForTheFirstTime');
+    }
+
+    function handleNotKnow() {
+        async function setFlashcardIsNotKnown() {
+            try {
+                const { error } = await supabase
+                    .from('flashcards')
+                    .update({ is_known: false })
+                    .eq('id', currentFlashcard?.id);
+
+                if (error) throw error;
+            } catch (error) {
+                const supabaseError = error as UnknownError;
+                console.log(supabaseError.error_description || supabaseError.message);
+            }
+        }
+
+        if (currentFlashcard?.is_known) {
+            setFlashcardIsNotKnown();
+        }
+        const index = drawIndexNumber();
+        setCurrentFlashcard(flashcards[index]);
+        setSite('frontForTheFirstTime');
+    }
+
+    function handleKnow() {
+        async function setFlashcardIsKnown() {
+            try {
+                const { error } = await supabase
+                    .from('flashcards')
+                    .update({ is_known: true })
+                    .eq('id', currentFlashcard?.id);
+
+                if (error) throw error;
+            } catch (error) {
+                const supabaseError = error as UnknownError;
+                console.log(supabaseError.error_description || supabaseError.message);
+            }
+        }
+
+        if (!currentFlashcard?.is_known) {
+            setFlashcardIsKnown();
+        }
+
+        const index = drawIndexNumber();
+        setCurrentFlashcard(flashcards[index]);
+        setSite('frontForTheFirstTime');
     }
 
     return (
@@ -131,13 +183,15 @@ export function Learning() {
                 </span>
             </div>
             <div className="flex flex-col w-full items-center py-8">
-                <span className="font-semibold text-normal text-opacity-60 text-xl">{site}:</span>
+                <span className="font-semibold text-normal text-opacity-60 text-xl">
+                    {site === 'frontForTheFirstTime' ? 'front' : site}:
+                </span>
                 <span
                     className={`text-3xl text-normal text-opacity-80 font-sriracha border-3 border-secondary rounded-xl p-4 w-2/3 text-center py-12 ${
-                        site === 'front' ? 'bg-flashcard' : 'bg-secondary'
+                        site === 'front' || 'frontForTheFirstTime' ? 'bg-flashcard' : 'bg-secondary'
                     }`}
                 >
-                    {currentFlashcard ? currentFlashcard[site] : null}
+                    {currentFlashcard ? currentFlashcard[site === 'frontForTheFirstTime' ? 'front' : site] : null}
                 </span>
             </div>
             <div className="grid grid-cols-2 w-full gap-4 justify-items-center py-8">
@@ -147,10 +201,18 @@ export function Learning() {
                 <Button type="button" variant="secondary" onClick={handleShuffleFalshcard}>
                     Shuffle
                 </Button>
-                <Button type="button" variant={site === 'front' ? 'disabled' : 'success'}>
+                <Button
+                    type="button"
+                    variant={site === 'frontForTheFirstTime' ? 'disabled' : 'success'}
+                    onClick={handleKnow}
+                >
                     I know
                 </Button>
-                <Button type="button" variant={site === 'front' ? 'disabled' : 'failed'}>
+                <Button
+                    type="button"
+                    variant={site === 'frontForTheFirstTime' ? 'disabled' : 'failed'}
+                    onClick={handleNotKnow}
+                >
                     I don't know
                 </Button>
             </div>
