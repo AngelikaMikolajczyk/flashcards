@@ -49,7 +49,7 @@ module.exports = {
                 0: '0%',
             },
             gridTemplateColumns: {
-                category: 'minmax(0, 2fr) repeat(3, minmax(0, 1fr))',
+                category: 'minmax(0, 2fr) repeat(4, minmax(0, 1fr))',
                 flashcard: 'minmax(0, 0.5fr) repeat(2, minmax(0, 2fr)) repeat(2, minmax(0, 1fr))',
             },
         },

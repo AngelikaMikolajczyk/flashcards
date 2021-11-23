@@ -13,6 +13,7 @@ interface FlashcardsCategoryRowProps {
     categoryValue: number;
     unit: 'item' | 'items' | null;
     onDelete: () => void;
+    knowingPercentage: number;
 }
 
 type UnknownError = {
@@ -26,6 +27,7 @@ function FlashcardsCategoryRow({
     categoryValue,
     unit,
     onDelete,
+    knowingPercentage,
 }: FlashcardsCategoryRowProps) {
     async function handleDeleteCategory() {
         try {
@@ -55,6 +57,7 @@ function FlashcardsCategoryRow({
             <span className="border border-primary px-10 py-6">
                 {categoryValue ?? 0} {unit}
             </span>
+            <span className="border border-primary px-10 py-6">{knowingPercentage}% learned</span>
             <Link
                 to={{ pathname: '/learning/' + categoryName, state: { categoryId: categoryId } }}
                 className="font-bold text-secondary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
@@ -89,7 +92,9 @@ function FlashcardsCategoryRow({
 
 export function Categories() {
     const [categories, setCategories] = useState<{ name: string; id: number }[] | undefined>();
-    const [flashcards, setFlashcards] = useState<{ id: number; category_id: number }[] | undefined>();
+    const [flashcards, setFlashcards] = useState<
+        { id: number; category_id: number; is_known: boolean }[] | undefined
+    >();
     const [dateNow, setDateNow] = useState<Date>(new Date());
 
     useEffect(() => {
@@ -144,6 +149,24 @@ export function Categories() {
         return null;
     }
 
+    const flashcardsKnowledgeLevel =
+        flashcards?.reduce<Record<number, number>>((acc, currentValue) => {
+            if (!acc[currentValue.category_id]) {
+                if (currentValue.is_known) {
+                    acc[currentValue.category_id] = 1;
+                }
+            } else {
+                if (currentValue.is_known) {
+                    acc[currentValue.category_id] += 1;
+                }
+            }
+            return acc;
+        }, {}) ?? {};
+
+    function knowingPercentageCount(categoryId: number) {
+        return Math.round((flashcardsKnowledgeLevel[categoryId] / flashcardsCount[categoryId]) * 100);
+    }
+
     return (
         <main className="flex flex-grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">Your FlashCards categories</Heading>
@@ -174,6 +197,9 @@ export function Categories() {
                                     }
                                     key={category.id}
                                     onDelete={updateDateState}
+                                    knowingPercentage={
+                                        flashcardsKnowledgeLevel[category.id] ? knowingPercentageCount(category.id) : 0
+                                    }
                                 />
                             );
                         })}
