@@ -6,7 +6,6 @@ TODO
 * zmiana podejścia do kontrolowanego inputa categorii
 * edycja fiszki - kategoria zostaje na sztywno ta sama, ale mamy wypełnione pola front i back do edycji i nie można 
     zapisać jeśli faktycznie nie dokonano zmian
-* dodanie nauki fiszek
 * dark theme
 * przypomnienie hasła
 * zbudowanie własnego Linku
@@ -17,4 +16,6 @@ TODO
 * zrobić bazowe clasy dla buttona
 * wersja mobile
 * wersja tablet
-* strona do nauki gdy nie ma żadnych fiszek
+* fix - reset zestawu fiszek nie powoduje refresha, tylko za drugim razem
+* fix - mignięcie strony kończącej naukę fiszek na początku, albo w trakcie nauki - currentFlashcard jest chwilowo undefined
+* feat - typy dla wszystkich plików

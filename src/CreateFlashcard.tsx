@@ -11,6 +11,7 @@ import { supabase } from './supabaseClient';
 import { CategoryInput } from './CategoryInput';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Category } from './types';
 
 type Inputs = {
     front: string;
@@ -32,7 +33,7 @@ const schema = yup
     .required();
 
 export function CreateFlashcard() {
-    const [categories, setCategories] = useState<{ name: string; id: number }[] | undefined>();
+    const [categories, setCategories] = useState<Category[] | undefined>();
 
     const notify = () => toast('Your flashcard has been added successfully!');
 

@@ -4,6 +4,7 @@ import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button } from './Button';
 import { Heading } from './Heading';
 import { supabase } from './supabaseClient';
+import { Flashcard } from './types';
 
 interface FlashcardsRowProps {
     itemNumber: number;
@@ -59,7 +60,7 @@ type UnknownError = {
 export function Flashcards() {
     let { categoryname } = useParams<{ categoryname: string }>();
     let location = useLocation<{ categoryId: number }>();
-    let [flashcards, setFlashcards] = useState<{ id: number; front: string; back: string }[] | undefined>();
+    let [flashcards, setFlashcards] = useState<Flashcard[] | undefined>();
     const history = useHistory();
 
     async function handleDelete(flashcardId: number) {

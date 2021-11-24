@@ -6,6 +6,7 @@ import { supabase } from './supabaseClient';
 import { FaLeanpub } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import { IconButton } from './IconButton';
+import { Flashcard, Category } from './types';
 
 interface FlashcardsCategoryRowProps {
     categoryName: string;
@@ -91,10 +92,8 @@ function FlashcardsCategoryRow({
 }
 
 export function Categories() {
-    const [categories, setCategories] = useState<{ name: string; id: number }[] | undefined>();
-    const [flashcards, setFlashcards] = useState<
-        { id: number; category_id: number; is_known: boolean }[] | undefined
-    >();
+    const [categories, setCategories] = useState<Category[] | undefined>();
+    const [flashcards, setFlashcards] = useState<Flashcard[] | undefined>();
     const [dateNow, setDateNow] = useState<Date>(new Date());
 
     useEffect(() => {

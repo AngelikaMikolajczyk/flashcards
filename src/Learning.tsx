@@ -4,6 +4,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { Button } from './Button';
 import { Heading } from './Heading';
 import { supabase } from './supabaseClient';
+import { Flashcard } from './types';
 
 type UnknownError = {
     error_description?: string;
@@ -12,22 +13,17 @@ type UnknownError = {
 
 type Site = 'front' | 'back' | 'frontForTheFirstTime';
 
-function filterUnknownFlashcards(
-    flashcards: { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean }[]
-) {
+function filterUnknownFlashcards(flashcards: Flashcard[]) {
     return flashcards.filter((flashcard) => flashcard.is_known === false);
 }
 
 export function Learning() {
     const { categoryname } = useParams<{ categoryname: string }>();
-    let [flashcards, setFlashcards] = useState<
-        { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean }[] | undefined
-    >();
-    let location = useLocation<{ categoryId: number }>();
+    const location = useLocation<{ categoryId: number }>();
+
+    const [flashcards, setFlashcards] = useState<Flashcard[] | undefined>();
     const [site, setSite] = useState<Site>('frontForTheFirstTime');
-    let [currentFlashcard, setCurrentFlashcard] = useState<
-        { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean } | undefined
-    >();
+    const [currentFlashcard, setCurrentFlashcard] = useState<Flashcard | undefined>();
     const [dateNow, setDateNow] = useState<Date>(new Date());
 
     useEffect(() => {
@@ -55,14 +51,19 @@ export function Learning() {
         fetchFlashcards();
     }, [currentFlashcard, location.state.categoryId, dateNow]);
 
+    if (flashcards === undefined) {
+        return <>Loading...</>;
+    }
+
     function reviewedFlashcardsCount(
         flashcards: { id: number; front: string; back: string; is_known: boolean; is_reviewed: boolean }[]
     ) {
         return flashcards.filter((flashcard) => flashcard.is_reviewed === true);
     }
 
-    function handleTurnFlashcard() {
-        async function setFlashcardIsReviewed() {
+    async function handleTurnFlashcard() {
+        if (site === 'frontForTheFirstTime') {
+            setSite('back');
             try {
                 const { error } = await supabase
                     .from('flashcards')
@@ -74,10 +75,6 @@ export function Learning() {
                 const supabaseError = error as UnknownError;
                 console.log(supabaseError.error_description || supabaseError.message);
             }
-        }
-        if (site === 'frontForTheFirstTime') {
-            setSite('back');
-            setFlashcardIsReviewed();
         } else if (site === 'back') {
             setSite('front');
         } else {
@@ -85,82 +82,66 @@ export function Learning() {
         }
     }
 
-    function drawIndexNumber() {
-        return Math.floor(Math.random() * filterUnknownFlashcards(flashcards).length);
+    function drawIndexNumber(f = flashcards) {
+        if (!f) {
+            return -1;
+        }
+        return Math.floor(Math.random() * filterUnknownFlashcards(f).length);
     }
 
     function handleShuffleFalshcard() {
         const index = drawIndexNumber();
-
-        setCurrentFlashcard(filterUnknownFlashcards(flashcards)[index]);
+        setCurrentFlashcard(filterUnknownFlashcards(flashcards!)[index]);
         setSite('frontForTheFirstTime');
     }
 
     function handleNotKnow() {
-        async function setFlashcardIsNotKnown() {
-            try {
-                const { error } = await supabase
-                    .from('flashcards')
-                    .update({ is_known: false })
-                    .eq('id', currentFlashcard?.id);
-
-                if (error) throw error;
-            } catch (error) {
-                const supabaseError = error as UnknownError;
-                console.log(supabaseError.error_description || supabaseError.message);
-            }
-        }
-
-        if (currentFlashcard?.is_known) {
-            setFlashcardIsNotKnown();
-        }
         const index = drawIndexNumber();
-        setCurrentFlashcard(filterUnknownFlashcards(flashcards)[index]);
+        setCurrentFlashcard(filterUnknownFlashcards(flashcards!)[index]);
         setSite('frontForTheFirstTime');
     }
 
-    function handleKnow() {
-        async function setFlashcardIsKnown() {
-            try {
-                const { error } = await supabase
-                    .from('flashcards')
-                    .update({ is_known: true })
-                    .eq('id', currentFlashcard?.id);
+    async function handleKnow() {
+        try {
+            const { error } = await supabase
+                .from('flashcards')
+                .update({ is_known: true })
+                .eq('id', currentFlashcard?.id);
 
-                if (error) throw error;
-            } catch (error) {
-                const supabaseError = error as UnknownError;
-                console.log(supabaseError.error_description || supabaseError.message);
-            }
+            if (error) throw error;
+
+            setCurrentFlashcard((prevCurrentFlashcard) => {
+                const withoutCurrentFlashcard = flashcards!.filter(
+                    (flashcard) => flashcard.id !== prevCurrentFlashcard?.id
+                );
+                const index = drawIndexNumber(withoutCurrentFlashcard);
+                return filterUnknownFlashcards(withoutCurrentFlashcard)[index];
+            });
+            setSite('frontForTheFirstTime');
+        } catch (error) {
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
         }
-
-        if (!currentFlashcard?.is_known) {
-            setFlashcardIsKnown();
-        }
-
-        const index = drawIndexNumber();
-        setCurrentFlashcard(filterUnknownFlashcards(flashcards)[index]);
-        setSite('frontForTheFirstTime');
     }
 
-    function handleResetFlashcardsSet() {
-        async function setAllFlashcardsAsUnknown() {
-            try {
-                const { error } = await supabase
-                    .from('flashcards')
-                    .update({ is_known: false })
-                    .eq('user_id', supabase.auth.user()?.id)
-                    .eq('category_id', location.state.categoryId);
+    async function handleResetFlashcardsSet() {
+        try {
+            const { error } = await supabase
+                .from('flashcards')
+                .update({ is_known: false, is_reviewed: false })
+                .eq('user_id', supabase.auth.user()?.id)
+                .eq('category_id', location.state.categoryId);
 
-                if (error) throw error;
-            } catch (error) {
-                const supabaseError = error as UnknownError;
-                console.log(supabaseError.error_description || supabaseError.message);
-            }
+            if (error) throw error;
+
+            setDateNow(new Date());
+        } catch (error) {
+            const supabaseError = error as UnknownError;
+            console.log(supabaseError.error_description || supabaseError.message);
         }
-        setAllFlashcardsAsUnknown();
-        setDateNow(new Date());
     }
+
+    console.log(currentFlashcard);
 
     return (
         <main className="flex flex-grow flex-col items-center mx-auto pt-14">
