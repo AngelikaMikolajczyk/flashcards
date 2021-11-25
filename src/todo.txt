@@ -4,8 +4,6 @@ TODO
 * info po zalogowaniu
 * info że konto na dany email istnieje jeśli jest próba rejestracji na emaila który ma konto
 * zmiana podejścia do kontrolowanego inputa categorii
-* edycja fiszki - kategoria zostaje na sztywno ta sama, ale mamy wypełnione pola front i back do edycji i nie można 
-    zapisać jeśli faktycznie nie dokonano zmian
 * dark theme
 * przypomnienie hasła
 * zbudowanie własnego Linku
@@ -15,6 +13,5 @@ TODO
 * wyświetlanie toastera po edycji fiszki
 * wersja mobile
 * wersja tablet
-* fix - reset zestawu fiszek nie powoduje refresha, tylko za drugim razem
-* fix - mignięcie strony kończącej naukę fiszek na początku, albo w trakcie nauki - currentFlashcard jest chwilowo undefined
 * feat - typy dla wszystkich plików
+* eliminacja error message po dodaniu nowej fiszki

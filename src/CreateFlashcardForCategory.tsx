@@ -63,7 +63,7 @@ export function CreateFlashcardForCategory() {
             }
         }
         fetchCategoryData();
-    }, []);
+    }, [categoryname]);
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
