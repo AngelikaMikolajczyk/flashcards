@@ -13,7 +13,6 @@ TODO
 * ogarnąć errory
 * testy
 * wyświetlanie toastera po edycji fiszki
-* zrobić bazowe clasy dla buttona
 * wersja mobile
 * wersja tablet
 * fix - reset zestawu fiszek nie powoduje refresha, tylko za drugim razem

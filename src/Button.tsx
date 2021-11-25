@@ -12,19 +12,25 @@ interface ButtonProps {
     disabled?: boolean;
 }
 
+const buttonClassNameBase = 'text-xl z-10 rounded-xl px-3.5 py-1.5 border-2';
+
 export function Button({ type, variant, children, onClick, disabled }: ButtonProps) {
     const VARIANT_TO_VARIANT_CLASS_NAME = {
-        primary: 'text-xl z-10 rounded-xl bg-primary px-3.5 py-1.5 border-2 border-primary text-white font-bold',
-        secondary:
-            'text-xl z-10 rounded-xl bg-transparent px-3.5 py-1.5 border-2 border-primary text-normal text-opacity-60',
+        primary: 'bg-primary border-primary text-white font-bold',
+        secondary: 'bg-transparent border-primary text-normal text-opacity-60',
         tertiary: 'flex gap-4 items-center',
-        disabled: 'text-xl z-10 rounded-xl bg-inactive px-3.5 py-1.5 border-2 border-inactive text-white font-bold',
-        success: 'text-xl z-10 rounded-xl bg-success px-3.5 py-1.5 border-2 border-success text white font bold',
-        failed: 'text-xl z-10 rounded-xl bg-failed px-3.5 py-1.5 border-2 border-failed text white font bold',
+        disabled: 'bg-inactive border-inactive text-white font-bold',
+        success: 'bg-success border-success text white font bold',
+        failed: 'bg-failed border-failed text white font bold',
     };
 
     return (
-        <button type={type} className={VARIANT_TO_VARIANT_CLASS_NAME[variant]} onClick={onClick} disabled={disabled}>
+        <button
+            type={type}
+            className={`${buttonClassNameBase} ${VARIANT_TO_VARIANT_CLASS_NAME[variant]}`}
+            onClick={onClick}
+            disabled={disabled}
+        >
             {children}
         </button>
     );
