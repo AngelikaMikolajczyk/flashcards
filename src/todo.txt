@@ -6,12 +6,19 @@ TODO
 * zmiana podejścia do kontrolowanego inputa categorii
 * dark theme
 * przypomnienie hasła
-* zbudowanie własnego Linku
 * właśny komponent dla wyświetlenia front i back inputów
 * ogarnąć errory
-* testy
+* testy dla (najpierw ogarnąć jak testować supabase):
+    - Categories
+    - CategoryInput?
+    - CreateFlashcard
+    - CreateFlashcardForCategory
+    - EditFlashcard
+    - Flashcards
+    - Learning
+    - ResetPassword
 * wyświetlanie toastera po edycji fiszki
 * wersja mobile
 * wersja tablet
 * feat - typy dla wszystkich plików
-* eliminacja error message po dodaniu nowej fiszki
+* eliminacja error message przy inputach po dodaniu nowej fiszki

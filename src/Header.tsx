@@ -2,6 +2,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button } from './Button';
 import { supabase } from './supabaseClient';
 import { useAuth } from './App';
+import useDarkMode from './useDarkMode';
+import { MdDarkMode, MdOutlineLightMode } from 'react-icons/md';
+import { IconButton } from './IconButton';
 
 type UnknownError = {
     error_description?: string;
@@ -65,15 +68,30 @@ function NoAuthedMenu() {
 
 export function Header() {
     const { isAuth } = useAuth();
+    const [colorMode, setMode] = useDarkMode();
+
     return (
-        <header className="flex flex-row justify-between items-center h-20 px-8 border-b-2 border-secondary text-primary shadow-md bg-white">
+        <header className="flex flex-row justify-between items-center h-20 px-8 border-b-2 border-secondary text-primary shadow-md bg-white dark:bg-gray-600">
             <div>
                 <Link to="/">
                     <p className="font-sriracha text-3xl">FlashCards</p>
                     <p className="font-sriracha text-2xl">online</p>
                 </Link>
             </div>
-            <div>{isAuth ? <AuthedMenu /> : <NoAuthedMenu />}</div>
+            <div className="flex items-center gap-8">
+                <div>{isAuth ? <AuthedMenu /> : <NoAuthedMenu />}</div>
+
+                <IconButton
+                    onClick={() => setMode(colorMode)}
+                    className="text-3xl w-10 h-10 bg-primary rounded-full flex justify-center items-center text-yellow-100 dark:bg-secondary dark:text-primary"
+                >
+                    {colorMode === 'light' ? (
+                        <MdOutlineLightMode className="w-6 h-6" />
+                    ) : (
+                        <MdDarkMode className="w-6 h-6" />
+                    )}
+                </IconButton>
+            </div>
         </header>
     );
 }

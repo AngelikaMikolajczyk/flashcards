@@ -51,7 +51,7 @@ function App() {
     }, []);
 
     return (
-        <div className="App font-nunito box-border h-screen flex flex-col bg-pattern">
+        <div className="App font-nunito box-border h-screen flex flex-col bg-pattern dark:bg-gray-500 transition duration-300">
             <AuthContext.Provider value={{ isAuth, setAuthState }}>
                 <Header />
                 <Switch>
