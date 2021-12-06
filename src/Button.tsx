@@ -16,12 +16,15 @@ const buttonClassNameBase = 'text-xl z-10 rounded-xl px-3.5 py-1.5 border-2';
 
 export function Button({ type, variant, children, onClick, disabled }: ButtonProps) {
     const VARIANT_TO_VARIANT_CLASS_NAME = {
-        primary: 'bg-primary border-primary text-white font-bold',
-        secondary: 'bg-transparent border-primary text-normal text-opacity-60',
+        primary: 'bg-primary dark:bg-dark-primary border-primary dark:border-dark-primary text-white font-bold',
+        secondary:
+            'bg-transparent border-primary dark:border-dark-primary text-normal dark:text-dark-normal text-opacity-60 dark:text-opacity-80',
         tertiary: 'flex gap-4 items-center',
-        disabled: 'bg-inactive border-inactive text-white font-bold',
-        success: 'bg-success border-success text white font bold',
-        failed: 'bg-failed border-failed text white font bold',
+        disabled:
+            'bg-inactive dark:bg-dark-inactive border-inactive dark:border-dark-inactive text-white dark:text-dark-inactive font-bold',
+        success:
+            'bg-success dark:bg-dark-success border-success dark:border-dark-success text-white dark:text-dark-success dark:text-opacity-80 font-medium',
+        failed: 'bg-failed dark:bg-dark-failed border-failed dark:border-dark-failed text-white dark:text-dark-failed font-medium',
     };
 
     return (

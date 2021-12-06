@@ -120,7 +120,10 @@ export function CreateFlashcard() {
                 <div className="flex flex-col gap-10  p-20">
                     <div className="flex justify-center gap-8">
                         <div className="flex flex-col">
-                            <label htmlFor="front" className="font-semibold text-normal text-opacity-60 text-xl">
+                            <label
+                                htmlFor="front"
+                                className="font-semibold text-normal dark:text-dark-normal text-opacity-60 text-xl"
+                            >
                                 front:
                             </label>
                             <textarea
@@ -129,7 +132,7 @@ export function CreateFlashcard() {
                                 rows={6}
                                 cols={40}
                                 placeholder="e.x. study"
-                                className="text-xl font-sriracha border-2 border-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="text-xl dark:text-dark-normal font-sriracha border-2 border-secondary dark:bg-gray-600 dark:border-dark-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
                             />
                             {errors.front && errors.front.message && (
                                 <ErrorMessage
@@ -139,7 +142,10 @@ export function CreateFlashcard() {
                             )}
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="back" className="font-semibold text-normal text-opacity-60 text-xl">
+                            <label
+                                htmlFor="back"
+                                className="font-semibold text-normal dark:text-dark-normal text-opacity-60 text-xl"
+                            >
                                 back:
                             </label>
                             <textarea
@@ -148,7 +154,7 @@ export function CreateFlashcard() {
                                 rows={6}
                                 cols={40}
                                 placeholder="e.x. uczyć się"
-                                className="text-xl font-sriracha border-2 border-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="text-xl font-sriracha border-2 border-secondary dark:bg-gray-600 dark:border-dark-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
                             />
                             {errors.back && errors.back.message && (
                                 <ErrorMessage

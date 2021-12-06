@@ -103,7 +103,7 @@ function EmailForm() {
                     id="email"
                     type="text"
                     {...register('email', { required: true })}
-                    className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus-within:border-primary appearance-none focus:outline-none"
+                    className="font-bold text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus-within:border-primary dark:focus-within:border-dark-primary dark:bg-gray-600 appearance-none focus:outline-none"
                     placeholder=" "
                 />
                 <label htmlFor="email" className="text-base pl-4 text-inactive absolute top-3 duration-300 origin-0">
@@ -195,7 +195,7 @@ function PasswordForm() {
                                     registerPassword.onChange(e);
                                 },
                             }}
-                            className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
+                            className="font-bold text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus:border-dark-primary dark:bg-gray-600 appearance-none focus:outline-none"
                             placeholder=" "
                         />
                         <label
@@ -207,9 +207,9 @@ function PasswordForm() {
                     </div>
                     <IconButton onClick={handleNewPasswordVisible} className="opacity-60 pl-4">
                         {newPasswordVisible === 'password' ? (
-                            <AiFillEye className="w-6 h-6" />
+                            <AiFillEye className="w-6 h-6 dark:text-dark-normal" />
                         ) : (
-                            <AiFillEyeInvisible className="w-6 h-6" />
+                            <AiFillEyeInvisible className="w-6 h-6 dark:text-dark-normal" />
                         )}
                     </IconButton>
                 </div>
@@ -228,7 +228,7 @@ function PasswordForm() {
                             id="confirmNewPassword"
                             type={confirmNewPasswordVisible}
                             {...register('confirmNewPassword', { required: true })}
-                            className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
+                            className="font-bold text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus:border-dark-primary dark:bg-gray-600 appearance-none focus:outline-none"
                             placeholder=" "
                             disabled={isConfirmPasswordDisabled}
                         />
@@ -241,9 +241,9 @@ function PasswordForm() {
                     </div>
                     <IconButton onClick={handleConfirmNewPasswordVisible} className="opacity-60 pl-4">
                         {confirmNewPasswordVisible === 'password' ? (
-                            <AiFillEye className="w-6 h-6" />
+                            <AiFillEye className="w-6 h-6 dark:text-dark-normal" />
                         ) : (
-                            <AiFillEyeInvisible className="w-6 h-6" />
+                            <AiFillEyeInvisible className="w-6 h-6 dark:text-dark-normal" />
                         )}
                     </IconButton>
                 </div>
@@ -271,7 +271,7 @@ export function Account() {
 
     return (
         <main className="flex flex-grow justify-center items-center">
-            <div className="w-2/5 border-2 border-secondary rounded-lg flex flex-col items-start p-11 shadow-lg">
+            <div className="w-2/5 border-2 border-secondary dark:border-dark-secondary rounded-lg flex flex-col items-start p-11 shadow-lg">
                 <Heading variant="primary">My account</Heading>
                 <div className="py-8 flex flex-col gap-10 w-full">
                     <EmailForm />

@@ -4,5 +4,9 @@
 
 input:focus-within ~ label,
 input:not(:placeholder-shown) ~ label {
-    @apply transform scale-90 -translate-y-9 text-primary;
+    @apply transform scale-90 -translate-y-9 text-primary dark:text-dark-primary;
+}
+
+input:disabled {
+    @apply dark:bg-gray-500;
 }

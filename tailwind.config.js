@@ -20,12 +20,23 @@ module.exports = {
                 success: '#b3d98c',
                 failed: '#efefae',
                 flashcard: '#ffdccc',
+                'dark-primary': '#b1b9cd',
+                'dark-inactive': '#666666',
+                'dark-success': '#4d6732',
+                'dark-failed': '#9a9a32',
+                'dark-secondary': '#92b9a6',
             },
             textColor: {
                 primary: '#FF928B',
                 secondary: '#FFAC81',
                 normal: '#030303',
                 inactive: '#D0D0D0',
+                'dark-primary': '#b1b9cd',
+                'dark-normal': '#f2f2f2',
+                'dark-inactive': '#b3b3b3',
+                'dark-success': '#b6d6a9',
+                'dark-failed': '#f3f3d8',
+                'dark-secondary': '#92b9a6',
             },
             borderColor: {
                 primary: '#FF928B',
@@ -34,6 +45,11 @@ module.exports = {
                 'dark-grey': '#666666',
                 success: '#49862d',
                 failed: '#aa9d22',
+                'dark-primary': '#b1b9cd',
+                'dark-inactive': '#666666',
+                'dark-success': '#375629',
+                'dark-failed': '#747425',
+                'dark-secondary': '#92b9a6',
             },
             borderWidth: {
                 1: '1px',
@@ -44,6 +60,7 @@ module.exports = {
             },
             ringColor: {
                 primary: '#FF928B',
+                'dark-primary': '#b1b9cd',
             },
             transformOrigin: {
                 0: '0%',

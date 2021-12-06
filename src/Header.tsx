@@ -27,7 +27,7 @@ function AuthedMenu() {
 
     return (
         <div className="flex flex-row items-center gap-10">
-            <nav className="flex flex-row text-xl gap-8 text-normal border-r-2 border-secondary pr-10 h-12 items-center">
+            <nav className="flex flex-row text-xl gap-8 text-normal dark:text-dark-normal border-r-2 border-secondary dark:border-gray-800 pr-10 h-12 items-center">
                 <div>
                     <Link to="/new-flashcard">+ Create</Link>
                 </div>
@@ -71,7 +71,7 @@ export function Header() {
     const [colorMode, setMode] = useDarkMode();
 
     return (
-        <header className="flex flex-row justify-between items-center h-20 px-8 border-b-2 border-secondary text-primary shadow-md bg-white dark:bg-gray-600">
+        <header className="flex flex-row justify-between items-center h-20 px-8 border-b-2 border-secondary text-primary dark:text-dark-primary shadow-md bg-white dark:bg-gray-700 dark:border-gray-800">
             <div>
                 <Link to="/">
                     <p className="font-sriracha text-3xl">FlashCards</p>
@@ -83,7 +83,7 @@ export function Header() {
 
                 <IconButton
                     onClick={() => setMode(colorMode)}
-                    className="text-3xl w-10 h-10 bg-primary rounded-full flex justify-center items-center text-yellow-100 dark:bg-secondary dark:text-primary"
+                    className="text-3xl w-10 h-10 bg-primary rounded-full flex justify-center items-center text-yellow-100 dark:bg-inactive dark:text-gray-600"
                 >
                     {colorMode === 'light' ? (
                         <MdOutlineLightMode className="w-6 h-6" />

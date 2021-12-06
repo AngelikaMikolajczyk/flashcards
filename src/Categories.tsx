@@ -48,31 +48,33 @@ function FlashcardsCategoryRow({
     }
 
     return (
-        <li className="grid grid-cols-category text-xl w-full">
+        <li className="grid grid-cols-category text-xl w-full dark:text-dark-normal">
             <Link
                 to={{ pathname: '/categories/' + categoryName, state: { categoryId: categoryId } }}
-                className="font-bold border border-primary px-10 py-6"
+                className="font-bold border border-primary dark:border-dark-primary px-10 py-6"
             >
                 {categoryName}
             </Link>
-            <span className="border border-primary px-10 py-6">
+            <span className="border border-primary dark:border-dark-primary px-10 py-6 dark:text-inactive">
                 {categoryValue ?? 0} {unit}
             </span>
-            <span className="border border-primary px-10 py-6">{knowingPercentage}% learned</span>
+            <span className="border border-primary dark:border-dark-primary px-10 py-6 dark:text-inactive">
+                {knowingPercentage}% learned
+            </span>
             <Link
                 to={{ pathname: '/learning/' + categoryName, state: { categoryId: categoryId } }}
-                className="font-bold text-secondary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
+                className="font-bold text-secondary dark:text-dark-secondary border border-primary dark:border-dark-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
             >
                 <FaLeanpub />
                 Learn!
             </Link>
             <IconButton
-                className="relative font-bold text-primary border border-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
+                className="relative font-bold text-primary dark:text-dark-primary border border-primary dark:border-dark-primary px-10 py-6 flex gap-4 items-center cursor-pointer"
                 onClick={handleDeleteCategory}
             >
                 <FaTrashAlt />
                 Delete
-                <span className="absolute top-5 right-6">
+                <span className="absolute top-5 right-7">
                     <p data-tip data-for="deleteCategory">
                         <FaRegQuestionCircle className="w-3" />
                     </p>
@@ -184,7 +186,7 @@ export function Categories() {
                 </div>
             ) : (
                 <div className="my-10">
-                    <ul className="flex flex-col border-2 border-primary">
+                    <ul className="flex flex-col border-2 border-primary dark:border-dark-primary">
                         {categories.map((category) => {
                             return (
                                 <FlashcardsCategoryRow

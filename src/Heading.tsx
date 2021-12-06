@@ -12,8 +12,8 @@ export function Heading({ variant, children, ...props }: HeadingProps) {
     };
 
     const variantToClassName = {
-        primary: 'text-primary text-4xl font-bold',
-        normal: 'text-secondary text-2xl font-bold',
+        primary: 'text-primary dark:text-dark-primary text-4xl font-bold',
+        normal: 'text-secondary dark:text-dark-secondary text-2xl font-bold',
     };
 
     return React.createElement(variantToTag[variant], { ...props, className: variantToClassName[variant] }, children);

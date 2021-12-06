@@ -95,15 +95,18 @@ export function CategoryInput({ categoryNames, formProps, setValue }: CategoryIn
     return (
         <div className="inline-block">
             <div>
-                <label htmlFor="category" className="font-semibold text-normal text-opacity-60 text-xl">
+                <label
+                    htmlFor="category"
+                    className="font-semibold text-normal dark:text-dark-normal text-opacity-60 text-xl"
+                >
                     category:
                 </label>
             </div>
             <div>
-                <div className="border-2 border-secondary rounded-xl flex">
+                <div className="border-2 border-secondary dark:border-dark-secondary rounded-xl flex">
                     <IconButton
                         onClick={handleList}
-                        className="bg-white p-2 rounded-l-xl border-r-2 border-secondary text-normal text-opacity-60"
+                        className="bg-white dark:bg-gray-600 p-2 rounded-l-xl border-r-2 border-secondary dark:border-dark-secondary text-normal dark:text-dark-normal text-opacity-60"
                     >
                         {isListVisible ? <FaChevronUp /> : <FaChevronDown />}
                     </IconButton>
@@ -112,7 +115,7 @@ export function CategoryInput({ categoryNames, formProps, setValue }: CategoryIn
                         {...formProps}
                         placeholder="e.x. english"
                         value={selectedCategory}
-                        className="p-2 rounded-r-xl text-xl font-sriracha focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="p-2 dark:bg-gray-600 rounded-r-xl text-xl dark:text-dark-normal font-sriracha focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
                         onChange={handleChangeCategory}
                         autoComplete="off"
                         onKeyDown={handleKeyDown}
@@ -121,7 +124,7 @@ export function CategoryInput({ categoryNames, formProps, setValue }: CategoryIn
                     />
                 </div>
                 {isListVisible && filteredCategories.length > 0 ? (
-                    <ul className="absolute border-2 border-secondary w-72 rounded-lg overflow-y-auto max-h-32 bg-white py-1 text-xl font-sriracha text-normal text-opacity-60">
+                    <ul className="absolute border-2 border-secondary dark:border-dark-secondary w-72 rounded-lg overflow-y-auto max-h-32 bg-white dark:bg-gray-600 py-1 text-xl font-sriracha text-normal dark:text-dark-normal text-opacity-60">
                         {filteredCategories.map((categoryName, index) => {
                             return (
                                 <li
@@ -129,7 +132,9 @@ export function CategoryInput({ categoryNames, formProps, setValue }: CategoryIn
                                     onClick={() => handleSelectCategory(categoryName)}
                                     className={
                                         'cursor-pointer min-w-max pr-4 pl-2 hover:bg-selecting' +
-                                        (index === activeSuggestionIndex ? ' bg-secondary' : ' bg-white')
+                                        (index === activeSuggestionIndex
+                                            ? ' bg-secondary dark:bg-dark-secondary'
+                                            : ' bg-white dark:bg-gray-600')
                                     }
                                     ref={(el) => (itemsRef.current[index] = el)}
                                     tabIndex={-1}
