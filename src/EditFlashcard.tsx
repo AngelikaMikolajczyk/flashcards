@@ -75,13 +75,17 @@ export function EditFlashcard() {
     return (
         <main className="flex flex-grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">
-                Edit FlashCard in category <span className="text-secondary">{categoryname}</span>
+                Edit FlashCard in category{' '}
+                <span className="text-secondary dark:text-dark-secondary">{categoryname}</span>
             </Heading>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col p-20">
                     <div className="flex justify-center gap-8">
                         <div className="flex flex-col">
-                            <label htmlFor="front" className="font-semibold text-normal text-opacity-60 text-xl">
+                            <label
+                                htmlFor="front"
+                                className="font-semibold text-normal dark:text-dark-normal text-opacity-60 text-xl"
+                            >
                                 front:
                             </label>
                             <textarea
@@ -90,17 +94,20 @@ export function EditFlashcard() {
                                 rows={6}
                                 cols={40}
                                 // placeholder="e.x. study"
-                                className="text-xl font-sriracha border-2 border-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="text-xl font-sriracha dark:text-dark-normal dark:bg-gray-600 border-2 border-secondary dark:border-dark-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
                             />
                             {errors.front && errors.front.message && (
                                 <ErrorMessage
                                     message={errors.front.message}
-                                    className="text-sm pl-4 pt-1 text-red-600"
+                                    className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 ></ErrorMessage>
                             )}
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="back" className="font-semibold text-normal text-opacity-60 text-xl">
+                            <label
+                                htmlFor="back"
+                                className="font-semibold text-normal dark:text-dark-normal text-opacity-60 text-xl"
+                            >
                                 back:
                             </label>
                             <textarea
@@ -109,12 +116,12 @@ export function EditFlashcard() {
                                 rows={6}
                                 cols={40}
                                 // placeholder="e.x. uczyć się"
-                                className="text-xl font-sriracha border-2 border-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="text-xl font-sriracha dark:text-dark-normal dark:bg-gray-600 border-2 border-secondary dark:border-dark-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
                             />
                             {errors.back && errors.back.message && (
                                 <ErrorMessage
                                     message={errors.back.message}
-                                    className="text-sm pl-4 pt-1 text-red-600"
+                                    className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 ></ErrorMessage>
                             )}
                         </div>
@@ -135,7 +142,7 @@ export function EditFlashcard() {
             </form>
             <Link
                 to={{ pathname: '/categories/' + categoryname, state: { categoryId: location.state.categoryId } }}
-                className="text-normal text-opacity-60 flex items-center gap-4"
+                className="text-normal dark:text-dark-normal text-opacity-60 flex items-center gap-4"
             >
                 <FaReply />
                 <span>Back to the flashcards category list</span>
@@ -146,7 +153,7 @@ export function EditFlashcard() {
                 hideProgressBar={true}
                 closeOnClick={false}
                 closeButton={false}
-                toastClassName={() => 'bg-primary text-white font-semibold rounded text-center p-1 bg-opacity-90'}
+                toastClassName={() => 'bg-primary dark:bg-dark-primary text-white font-semibold rounded text-center p-1 bg-opacity-90'}
             /> */}
         </main>
     );

@@ -137,7 +137,7 @@ export function CreateFlashcard() {
                             {errors.front && errors.front.message && (
                                 <ErrorMessage
                                     message={errors.front.message}
-                                    className="text-sm pl-4 pt-1 text-red-600"
+                                    className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 ></ErrorMessage>
                             )}
                         </div>
@@ -154,12 +154,12 @@ export function CreateFlashcard() {
                                 rows={6}
                                 cols={40}
                                 placeholder="e.x. uczyć się"
-                                className="text-xl font-sriracha border-2 border-secondary dark:bg-gray-600 dark:border-dark-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
+                                className="text-xl dark:text-dark-normal font-sriracha border-2 border-secondary dark:bg-gray-600 dark:border-dark-secondary rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
                             />
                             {errors.back && errors.back.message && (
                                 <ErrorMessage
                                     message={errors.back.message}
-                                    className="text-sm pl-4 pt-1 text-red-600"
+                                    className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 ></ErrorMessage>
                             )}
                         </div>
@@ -179,7 +179,7 @@ export function CreateFlashcard() {
                         {errors.category && errors.category.message && (
                             <ErrorMessage
                                 message={errors.category.message}
-                                className="text-sm pl-4 pt-1 text-red-600"
+                                className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                             ></ErrorMessage>
                         )}
                     </div>
@@ -193,7 +193,10 @@ export function CreateFlashcard() {
                     </div>
                 </div>
             </form>
-            <Link to="/categories" className="text-normal text-opacity-60 flex items-center gap-4">
+            <Link
+                to="/categories"
+                className="text-normal dark:text-dark-normal text-opacity-60 flex items-center gap-4"
+            >
                 <FaReply />
                 <span>Back to the flashcards category list</span>
             </Link>
@@ -203,7 +206,9 @@ export function CreateFlashcard() {
                 hideProgressBar={true}
                 closeOnClick={false}
                 closeButton={false}
-                toastClassName={() => 'bg-primary text-white font-semibold rounded text-center p-1 bg-opacity-90'}
+                toastClassName={() =>
+                    'bg-primary dark:bg-dark-primary text-white font-semibold rounded text-center p-1 bg-opacity-90'
+                }
             />
         </main>
     );

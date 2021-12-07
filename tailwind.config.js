@@ -25,6 +25,7 @@ module.exports = {
                 'dark-success': '#4d6732',
                 'dark-failed': '#9a9a32',
                 'dark-secondary': '#92b9a6',
+                'dark-flashcard': '#73a58d',
             },
             textColor: {
                 primary: '#FF928B',
@@ -37,6 +38,7 @@ module.exports = {
                 'dark-success': '#b6d6a9',
                 'dark-failed': '#f3f3d8',
                 'dark-secondary': '#92b9a6',
+                'error-message': '#cc6666',
             },
             borderColor: {
                 primary: '#FF928B',
@@ -50,6 +52,7 @@ module.exports = {
                 'dark-success': '#375629',
                 'dark-failed': '#747425',
                 'dark-secondary': '#92b9a6',
+                'light-grey': '#cccccc',
             },
             borderWidth: {
                 1: '1px',

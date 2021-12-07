@@ -147,17 +147,17 @@ export function Learning() {
         <main className="flex flex-grow flex-col items-center mx-auto pt-14">
             <div className="flex justify-between w-full items-end">
                 <Heading variant="primary">Learning:</Heading>
-                <span className="text-secondary text-4xl font-bold">{categoryname}</span>
+                <span className="text-secondary dark:text-dark-secondary text-4xl font-bold">{categoryname}</span>
             </div>
             {currentFlashcard ? (
                 <>
                     <div className="grid grid-cols-2 py-10">
-                        <span className="text-xl">
+                        <span className="text-xl dark:text-dark-normal">
                             {flashcards ? flashcards.length : 0}{' '}
                             {flashcards ? (flashcards.length === 1 ? 'flashcard' : 'flashcards') : 'flashcards'} in this
                             category
                         </span>
-                        <span className="text-xl">
+                        <span className="text-xl dark:text-dark-normal">
                             {flashcards ? reviewedFlashcardsCount(flashcards).length : 0}{' '}
                             {flashcards
                                 ? reviewedFlashcardsCount(flashcards).length === 1
@@ -166,7 +166,7 @@ export function Learning() {
                                 : 'flashcards'}{' '}
                             reviewed in this category
                         </span>
-                        <span className="text-xl">
+                        <span className="text-xl dark:text-dark-normal">
                             {flashcards ? flashcards.length - filterUnknownFlashcards(flashcards).length : 0}{' '}
                             {flashcards
                                 ? flashcards.length - filterUnknownFlashcards(flashcards).length === 1
@@ -175,7 +175,7 @@ export function Learning() {
                                 : 'flashcards'}{' '}
                             learned
                         </span>
-                        <span className="text-xl">
+                        <span className="text-xl dark:text-dark-normal">
                             {flashcards ? filterUnknownFlashcards(flashcards).length : 0}{' '}
                             {flashcards
                                 ? filterUnknownFlashcards(flashcards).length === 1
@@ -186,12 +186,14 @@ export function Learning() {
                         </span>
                     </div>
                     <div className="flex flex-col w-full items-center py-8">
-                        <span className="font-semibold text-normal text-opacity-60 text-xl">
+                        <span className="font-semibold text-normal dark:text-dark-normal text-opacity-60 text-xl">
                             {site === 'frontForTheFirstTime' ? 'front' : site}:
                         </span>
                         <span
-                            className={`text-3xl text-normal text-opacity-80 font-sriracha border-3 border-secondary rounded-xl p-4 w-2/3 text-center py-12 ${
-                                site === 'front' || 'frontForTheFirstTime' ? 'bg-flashcard' : 'bg-secondary'
+                            className={`text-3xl text-normal dark:text-dark-normal text-opacity-80 font-sriracha border-3 border-secondary dark:border-dark-secondary rounded-xl p-4 w-2/3 text-center py-12 ${
+                                site === ('front' || 'frontForTheFirstTime')
+                                    ? 'bg-flashcard dark:bg-dark-flashcard'
+                                    : 'bg-secondary dark:bg-dark-secondary'
                             }`}
                         >
                             {currentFlashcard
@@ -233,7 +235,10 @@ export function Learning() {
                     </div>
                 </div>
             )}
-            <Link to="/categories" className="text-normal text-opacity-60 flex items-center gap-4 pt-14">
+            <Link
+                to="/categories"
+                className="text-normal dark:text-dark-normal text-opacity-60 flex items-center gap-4 pt-14"
+            >
                 <FaReply />
                 <span>Back to the flashcards category list</span>
             </Link>

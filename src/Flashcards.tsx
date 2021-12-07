@@ -27,10 +27,16 @@ function FlashcardsRow({
 }: FlashcardsRowProps) {
     return (
         <li className="grid grid-cols-flashcard text-xl w-full">
-            <span className="border-1 border-dark-grey px-10 py-6">{itemNumber}.</span>
-            <span className="font-sriracha text-primary border-1 border-dark-grey px-10 py-6">{front}</span>
-            <span className="font-sriracha text-primary border-1 border-dark-grey px-10 py-6">{back}</span>
-            <span className="border-1 border-dark-grey px-10 py-6 flex gap-4 items-center cursor-pointer">
+            <span className="border-1 border-dark-grey dark:border-light-grey px-10 py-6 dark:text-dark-normal">
+                {itemNumber}.
+            </span>
+            <span className="font-sriracha text-primary dark:text-dark-primary border-1 border-dark-grey dark:border-light-grey px-10 py-6">
+                {front}
+            </span>
+            <span className="font-sriracha text-primary dark:text-dark-primary border-1 border-dark-grey dark:border-light-grey px-10 py-6">
+                {back}
+            </span>
+            <span className="border-1 border-dark-grey dark:border-light-grey dark:text-dark-normal px-10 py-6 flex gap-4 items-center cursor-pointer">
                 <Link
                     to={{
                         pathname: '/categories/' + categoryname + '/edit-flashcard',
@@ -38,13 +44,13 @@ function FlashcardsRow({
                     }}
                     className="flex gap-4 items-center"
                 >
-                    <FaEdit className="text-secondary mb-1" />
+                    <FaEdit className="text-secondary dark:text-dark-secondary mb-1" />
                     Edit
                 </Link>
             </span>
-            <span className="border-1 border-dark-grey px-10 py-6">
+            <span className="border-1 border-dark-grey dark:border-light-grey dark:text-dark-normal px-10 py-6">
                 <Button type="button" variant="tertiary" onClick={onDelete}>
-                    <FaTrashAlt className="text-secondary mb-1" />
+                    <FaTrashAlt className="text-secondary dark:text-dark-secondary mb-1" />
                     Delete
                 </Button>
             </span>
@@ -108,16 +114,17 @@ export function Flashcards() {
     return (
         <main className="flex flex-grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">
-                Your FlashCards in category <span className="text-secondary">{categoryname}</span>
+                Your FlashCards in category{' '}
+                <span className="text-secondary dark:text-dark-secondary">{categoryname}</span>
             </Heading>
             {flashcards.length !== 0 ? (
                 <div className="my-32">
                     <div className="grid grid-cols-flashcard text-xl w-full pb-4">
                         <span></span>
-                        <span className="justify-self-center font-bold">front</span>
-                        <span className="justify-self-center font-bold">back</span>
+                        <span className="justify-self-center font-bold dark:text-dark-normal">front</span>
+                        <span className="justify-self-center font-bold dark:text-dark-normal">back</span>
                     </div>
-                    <ul className="border-1 border-dark-grey">
+                    <ul className="border-1 border-dark-grey dark:border-light-grey">
                         {flashcards.map((flashcard, index) => {
                             return (
                                 <FlashcardsRow
@@ -142,7 +149,7 @@ export function Flashcards() {
                                 pathname: '/learning/' + categoryname,
                                 state: { categoryId: location.state.categoryId },
                             }}
-                            className="text-xl z-10 rounded-xl bg-transparent px-3.5 py-1.5 border-2 border-primary text-normal text-opacity-60"
+                            className="text-xl z-10 rounded-xl bg-transparent px-3.5 py-1.5 border-2 border-primary dark:border-dark-primary text-normal dark:text-dark-normal text-opacity-60"
                         >
                             Learn!
                         </Link>
@@ -156,7 +163,10 @@ export function Flashcards() {
                     </Button>
                 </div>
             )}
-            <Link to="/categories" className="text-normal text-opacity-60 flex items-center gap-4">
+            <Link
+                to="/categories"
+                className="text-normal dark:text-dark-normal text-opacity-60 flex items-center gap-4"
+            >
                 <FaReply />
                 <span>Back to the flashcards category list</span>
             </Link>

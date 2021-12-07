@@ -109,9 +109,10 @@ function EmailForm() {
                 <label htmlFor="email" className="text-base pl-4 text-inactive absolute top-3 duration-300 origin-0">
                     Email
                 </label>
+
                 {errors.email && errors.email.message && (
                     <ErrorMessage
-                        className="text-sm pl-4 pt-1 text-red-600"
+                        className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                         message={errors.email.message}
                     ></ErrorMessage>
                 )}
@@ -215,7 +216,7 @@ function PasswordForm() {
                 </div>
                 {errors.newPassword && errors.newPassword.message && (
                     <ErrorMessage
-                        className="text-sm pl-4 pt-1 text-red-600"
+                        className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                         style={{ width: 'calc(100% - 40px)' }}
                         message={errors.newPassword.message}
                     ></ErrorMessage>
@@ -249,7 +250,7 @@ function PasswordForm() {
                 </div>
                 {errors.confirmNewPassword && errors.confirmNewPassword.message && (
                     <ErrorMessage
-                        className="text-sm pl-4 pt-1 text-red-600"
+                        className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                         style={{ width: 'calc(100% - 40px)' }}
                         message={errors.confirmNewPassword.message}
                     ></ErrorMessage>

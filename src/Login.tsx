@@ -76,7 +76,7 @@ export function Login() {
     return (
         <main className="flex flex-grow justify-center items-center">
             <form
-                className="w-2/5 border-2 border-secondary rounded-lg flex flex-col items-start p-11 shadow-lg"
+                className="w-2/5 border-2 border-secondary dark:border-dark-secondary rounded-lg flex flex-col items-start p-11 shadow-lg"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <Heading variant="primary">Log in</Heading>
@@ -86,7 +86,7 @@ export function Login() {
                             id="email"
                             type="text"
                             {...register('email', { required: true })}
-                            className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus-within:border-primary appearance-none focus:outline-none"
+                            className="font-bold dark:bg-gray-600 text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus-within:border-primary dark:focus-within:border-dark-primary appearance-none focus:outline-none"
                             placeholder=" "
                         />
                         <label
@@ -98,7 +98,7 @@ export function Login() {
                         {errors.email && errors.email.message && (
                             <ErrorMessage
                                 message={errors.email.message}
-                                className="text-sm pl-4 pt-1 text-red-600"
+                                className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                             ></ErrorMessage>
                         )}
                     </div>
@@ -110,7 +110,7 @@ export function Login() {
                                     id="password"
                                     type={passwordVisible}
                                     {...register('password', { required: true })}
-                                    className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
+                                    className="font-bold dark:bg-gray-600 text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus-within:border-dark-primary appearance-none focus:outline-none"
                                     placeholder=" "
                                 />
                                 <label
@@ -119,22 +119,25 @@ export function Login() {
                                 >
                                     Password
                                 </label>
-                                <Link to="/reset-password" className="absolute -right-0 -bottom-8 text-primary">
+                                <Link
+                                    to="/reset-password"
+                                    className="absolute -right-0 -bottom-8 text-primary dark:text-dark-primary"
+                                >
                                     Reset password?
                                 </Link>
                             </div>
                             <IconButton onClick={handlePasswordVisible} className="opacity-60 pl-4">
                                 {passwordVisible === 'password' ? (
-                                    <AiFillEye className="w-6 h-6" />
+                                    <AiFillEye className="w-6 h-6 dark:text-dark-normal" />
                                 ) : (
-                                    <AiFillEyeInvisible className="w-6 h-6" />
+                                    <AiFillEyeInvisible className="w-6 h-6 dark:text-dark-normal" />
                                 )}
                             </IconButton>
                         </div>
                         {errors.password && errors.password.message && (
                             <ErrorMessage
                                 message={errors.password.message}
-                                className="text-sm pl-4 pt-1 text-red-600"
+                                className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                             ></ErrorMessage>
                         )}
                     </div>
@@ -142,7 +145,7 @@ export function Login() {
                     {submitErrorMessage ? (
                         <ErrorMessage
                             message={submitErrorMessage}
-                            className="text-sm pl-4 pt-1 text-red-600"
+                            className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                         ></ErrorMessage>
                     ) : null}
                 </div>
@@ -156,9 +159,9 @@ export function Login() {
                     </Button>
                 </div>
 
-                <div className="text-opacity-60 text-normal pt-4 font-bold">
+                <div className="text-opacity-60 text-normal dark:text-dark-normal pt-4 font-bold">
                     Don't have account?{' '}
-                    <Link to="/register" className="text-primary">
+                    <Link to="/register" className="text-primary dark:text-dark-primary">
                         Register now!
                     </Link>
                 </div>

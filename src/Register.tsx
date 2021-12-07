@@ -92,7 +92,7 @@ export function Register() {
     return (
         <main className="flex flex-grow justify-center items-center">
             <form
-                className="w-2/5 border-2 border-secondary rounded-lg flex flex-col items-start p-11 shadow-lg"
+                className="w-2/5 border-2 border-secondary dark:border-dark-secondary rounded-lg flex flex-col items-start p-11 shadow-lg"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <Heading variant="primary">Register</Heading>
@@ -102,7 +102,7 @@ export function Register() {
                             id="email"
                             type="text"
                             {...register('email', { required: true })}
-                            className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus-within:border-primary appearance-none focus:outline-none"
+                            className="font-bold dark:bg-gray-600 text-normal dark:text-dark-normal text-opacity-60 border border-inactive  rounded-lg h-12 p-4 focus-within:border-primary dark:focus-within:border-dark-primary appearance-none focus:outline-none"
                             placeholder=" "
                         />
                         <label
@@ -113,7 +113,7 @@ export function Register() {
                         </label>
                         {errors.email && errors.email.message && (
                             <ErrorMessage
-                                className="text-sm pl-4 pt-1 text-red-600"
+                                className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 message={errors.email.message}
                             ></ErrorMessage>
                         )}
@@ -126,7 +126,7 @@ export function Register() {
                                     id="password"
                                     type={passwordVisible}
                                     {...register('password', { required: true })}
-                                    className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
+                                    className="font-bold dark:bg-gray-600 text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus-within:border-dark-primary appearance-none focus:outline-none"
                                     placeholder=" "
                                 />
                                 <label
@@ -138,16 +138,16 @@ export function Register() {
                             </div>
                             <IconButton onClick={handlePasswordVisible} className="opacity-60 pl-4">
                                 {passwordVisible === 'password' ? (
-                                    <AiFillEye className="w-6 h-6" />
+                                    <AiFillEye className="w-6 h-6 dark:text-dark-normal" />
                                 ) : (
-                                    <AiFillEyeInvisible className="w-6 h-6" />
+                                    <AiFillEyeInvisible className="w-6 h-6 dark:text-dark-normal" />
                                 )}
                             </IconButton>
                         </div>
 
                         {errors.password && errors.password.message && (
                             <ErrorMessage
-                                className="text-sm pl-4 pt-1 text-red-600"
+                                className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 style={{ width: 'calc(100% - 40px)' }}
                                 message={errors.password.message}
                             ></ErrorMessage>
@@ -161,7 +161,7 @@ export function Register() {
                                     id="confirmPassword"
                                     type={confirmPasswordVisible}
                                     {...register('confirmPassword', { required: true })}
-                                    className="font-bold text-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary appearance-none focus:outline-none"
+                                    className="font-bold dark:bg-gray-600 text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus-within:border-dark-primary appearance-none focus:outline-none"
                                     placeholder=" "
                                 />
                                 <label
@@ -173,16 +173,16 @@ export function Register() {
                             </div>
                             <IconButton onClick={handleConfirmPasswordVisible} className="opacity-60 pl-4">
                                 {confirmPasswordVisible === 'password' ? (
-                                    <AiFillEye className="w-6 h-6" />
+                                    <AiFillEye className="w-6 h-6 dark:text-dark-normal" />
                                 ) : (
-                                    <AiFillEyeInvisible className="w-6 h-6" />
+                                    <AiFillEyeInvisible className="w-6 h-6 dark:text-dark-normal" />
                                 )}
                             </IconButton>
                         </div>
 
                         {errors.confirmPassword && errors.confirmPassword.message && (
                             <ErrorMessage
-                                className="text-sm pl-4 pt-1 text-red-600"
+                                className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 style={{ width: 'calc(100% - 40px)' }}
                                 message={errors.confirmPassword.message}
                             ></ErrorMessage>
@@ -198,9 +198,9 @@ export function Register() {
                         Cancel
                     </Button>
                 </div>
-                <div className="text-opacity-60 text-normal pt-4 font-bold">
+                <div className="text-opacity-60 text-normal dark:text-dark-normal pt-4 font-bold">
                     Already have account?{' '}
-                    <Link to="/login" className="text-primary">
+                    <Link to="/login" className="text-primary dark:text-dark-primary">
                         Log in
                     </Link>
                 </div>
