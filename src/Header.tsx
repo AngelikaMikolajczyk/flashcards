@@ -68,7 +68,7 @@ function NoAuthedMenu() {
 
 export function Header() {
     const { isAuth } = useAuth();
-    const [colorMode, setMode] = useDarkMode();
+    const [colorMode, setColorMode] = useDarkMode();
 
     return (
         <header className="flex flex-row justify-between items-center h-20 px-8 border-b-2 border-secondary text-primary dark:text-dark-primary shadow-md bg-white dark:bg-gray-700 dark:border-gray-800">
@@ -82,7 +82,7 @@ export function Header() {
                 <div>{isAuth ? <AuthedMenu /> : <NoAuthedMenu />}</div>
 
                 <IconButton
-                    onClick={() => setMode(colorMode)}
+                    onClick={() => setColorMode(colorMode)}
                     className="text-3xl w-10 h-10 bg-primary rounded-full flex justify-center items-center text-yellow-100 dark:bg-inactive dark:text-gray-600"
                 >
                     {colorMode === 'light' ? (

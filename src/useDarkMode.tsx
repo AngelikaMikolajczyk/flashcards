@@ -3,7 +3,19 @@ import { useEffect, useState } from 'react';
 type Mode = 'dark' | 'light';
 
 export default function useDarkMode() {
-    const [mode, setMode] = useState<Mode>('dark');
+    const [mode, setMode] = useState<Mode>(
+        (localStorage.getItem('theme') as Mode | null) ??
+            (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    );
+
+    function saveUserPreferences(preference: Mode) {
+        localStorage.setItem('theme', preference);
+    }
+
+    function setColorMode(colorMode: Mode) {
+        setMode(colorMode);
+        saveUserPreferences(colorMode);
+    }
 
     const colorMode: Mode = mode === 'dark' ? 'light' : 'dark';
 
@@ -14,5 +26,5 @@ export default function useDarkMode() {
         root.classList.add(mode);
     }, [colorMode, mode]);
 
-    return [colorMode, setMode] as const;
+    return [colorMode, setColorMode] as const;
 }
