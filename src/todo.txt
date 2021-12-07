@@ -23,4 +23,3 @@ TODO
 * feat - typy dla wszystkich plików
 * eliminacja error message przy inputach po dodaniu nowej fiszki
 * poprawa wysokości obrazku w home
-* usunięcie powtórzenia hasła

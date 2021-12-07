@@ -228,7 +228,9 @@ export function Learning() {
                 <div className="pt-14 flex flex-col gap-14">
                     <Heading variant="normal">You have learned all flashcards in this category!</Heading>
                     <div className="flex flex-col gap-8 items-center">
-                        <div className="font-bold text-xl text-normal text-opacity-60">Do you want to learn again?</div>
+                        <div className="font-bold text-xl text-normal dark:text-dark-normal text-opacity-60">
+                            Do you want to learn again?
+                        </div>
                         <Button type="button" variant="primary" onClick={handleResetFlashcardsSet}>
                             Yes, reset this set
                         </Button>

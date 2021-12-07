@@ -157,7 +157,9 @@ export function Flashcards() {
                 </div>
             ) : (
                 <div className="my-32 flex flex-col items-center gap-8">
-                    <div className="font-semibold text-2xl">You don't have any flashcards in this category...</div>
+                    <div className="font-semibold text-2xl dark:text-dark-normal">
+                        You don't have any flashcards in this category...
+                    </div>
                     <Button type="button" variant="primary" onClick={handleAdd}>
                         + Add first flashcard in this category
                     </Button>

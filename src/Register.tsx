@@ -14,7 +14,6 @@ import { Heading } from './Heading';
 type Inputs = {
     email: string;
     password: string;
-    confirmPassword: string;
 };
 
 type UnknownError = {
@@ -33,16 +32,11 @@ const schema = yup
                 excludeEmptyString: true,
             })
             .required(),
-        confirmPassword: yup
-            .string()
-            .oneOf([yup.ref('password')], 'passwords must match')
-            .required(),
     })
     .required();
 
 export function Register() {
     const [passwordVisible, setPasswordVisible] = useState('password');
-    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState('password');
 
     const history = useHistory();
 
@@ -74,14 +68,6 @@ export function Register() {
             setPasswordVisible('text');
         } else {
             setPasswordVisible('password');
-        }
-    }
-
-    function handleConfirmPasswordVisible() {
-        if (confirmPasswordVisible === 'password') {
-            setConfirmPasswordVisible('text');
-        } else {
-            setConfirmPasswordVisible('password');
         }
     }
 
@@ -150,41 +136,6 @@ export function Register() {
                                 className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                                 style={{ width: 'calc(100% - 40px)' }}
                                 message={errors.password.message}
-                            ></ErrorMessage>
-                        )}
-                    </div>
-
-                    <div className="w-4/5">
-                        <div className="flex flex-row">
-                            <div className="flex flex-col relative flex-grow">
-                                <input
-                                    id="confirmPassword"
-                                    type={confirmPasswordVisible}
-                                    {...register('confirmPassword', { required: true })}
-                                    className="font-bold dark:bg-gray-600 text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus-within:border-dark-primary appearance-none focus:outline-none"
-                                    placeholder=" "
-                                />
-                                <label
-                                    htmlFor="confirmPassword"
-                                    className="text-base pl-4 text-inactive absolute top-3 duration-300 origin-0"
-                                >
-                                    Confirm password
-                                </label>
-                            </div>
-                            <IconButton onClick={handleConfirmPasswordVisible} className="opacity-60 pl-4">
-                                {confirmPasswordVisible === 'password' ? (
-                                    <AiFillEye className="w-6 h-6 dark:text-dark-normal" />
-                                ) : (
-                                    <AiFillEyeInvisible className="w-6 h-6 dark:text-dark-normal" />
-                                )}
-                            </IconButton>
-                        </div>
-
-                        {errors.confirmPassword && errors.confirmPassword.message && (
-                            <ErrorMessage
-                                className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
-                                style={{ width: 'calc(100% - 40px)' }}
-                                message={errors.confirmPassword.message}
                             ></ErrorMessage>
                         )}
                     </div>

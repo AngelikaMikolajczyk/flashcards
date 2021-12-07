@@ -17,7 +17,6 @@ type EmailFormInputs = {
 
 type PasswordFormInputs = {
     newPassword: string;
-    confirmNewPassword: string;
 };
 
 type UnknownError = {
@@ -41,10 +40,6 @@ const passwordFormSchema = yup
                 excludeEmptyString: true,
             })
             .required(),
-        confirmNewPassword: yup
-            .string()
-            .oneOf([yup.ref('newPassword')], 'passwords must match')
-            .required(),
     })
     .required();
 
@@ -54,7 +49,6 @@ const emialDefaultValues = {
 
 const passwordDefaultValues = {
     newPassword: '',
-    confirmNewPassword: '',
 };
 
 function EmailForm() {
@@ -76,7 +70,6 @@ function EmailForm() {
             email: user && user.email ? user.email : '',
         });
         currentUser.current = user;
-        console.log(user);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -126,8 +119,6 @@ function EmailForm() {
 
 function PasswordForm() {
     const [newPasswordVisible, setNewPasswordVisible] = useState<'password' | 'text'>('password');
-    const [confirmNewPasswordVisible, setConfirmNewPasswordVisible] = useState<'password' | 'text'>('password');
-    const [isConfirmPasswordDisabled, setIsConfirmPasswordDisabled] = useState<boolean>(true);
 
     const {
         register,
@@ -163,14 +154,6 @@ function PasswordForm() {
         }
     }
 
-    function handleConfirmNewPasswordVisible() {
-        if (confirmNewPasswordVisible === 'password') {
-            setConfirmNewPasswordVisible('text');
-        } else {
-            setConfirmNewPasswordVisible('password');
-        }
-    }
-
     const registerPassword = register('newPassword', {
         required: true,
     });
@@ -186,15 +169,6 @@ function PasswordForm() {
                             type={newPasswordVisible}
                             {...{
                                 ...registerPassword,
-                                onChange: (e) => {
-                                    if (e.currentTarget.value) {
-                                        setIsConfirmPasswordDisabled(false);
-                                    } else {
-                                        setIsConfirmPasswordDisabled(true);
-                                    }
-
-                                    registerPassword.onChange(e);
-                                },
                             }}
                             className="font-bold text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus:border-dark-primary dark:bg-gray-600 appearance-none focus:outline-none"
                             placeholder=" "
@@ -219,40 +193,6 @@ function PasswordForm() {
                         className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
                         style={{ width: 'calc(100% - 40px)' }}
                         message={errors.newPassword.message}
-                    ></ErrorMessage>
-                )}
-            </div>
-            <div className="w-4/5">
-                <div className="flex flex-row">
-                    <div className="flex flex-col relative flex-grow">
-                        <input
-                            id="confirmNewPassword"
-                            type={confirmNewPasswordVisible}
-                            {...register('confirmNewPassword', { required: true })}
-                            className="font-bold text-normal dark:text-dark-normal text-opacity-60 border border-inactive rounded-lg h-12 p-4 focus:border-primary dark:focus:border-dark-primary dark:bg-gray-600 appearance-none focus:outline-none"
-                            placeholder=" "
-                            disabled={isConfirmPasswordDisabled}
-                        />
-                        <label
-                            htmlFor="confirmNewPassword"
-                            className="text-base pl-4 text-inactive absolute top-3 duration-300 origin-0"
-                        >
-                            Confirm new password
-                        </label>
-                    </div>
-                    <IconButton onClick={handleConfirmNewPasswordVisible} className="opacity-60 pl-4">
-                        {confirmNewPasswordVisible === 'password' ? (
-                            <AiFillEye className="w-6 h-6 dark:text-dark-normal" />
-                        ) : (
-                            <AiFillEyeInvisible className="w-6 h-6 dark:text-dark-normal" />
-                        )}
-                    </IconButton>
-                </div>
-                {errors.confirmNewPassword && errors.confirmNewPassword.message && (
-                    <ErrorMessage
-                        className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
-                        style={{ width: 'calc(100% - 40px)' }}
-                        message={errors.confirmNewPassword.message}
                     ></ErrorMessage>
                 )}
             </div>

@@ -173,13 +173,13 @@ export function Categories() {
             <Heading variant="primary">Your FlashCards categories</Heading>
             {categories.length === 0 ? (
                 <div className="flex flex-col gap-8 my-16 text-xl">
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center dark:text-dark-normal">
                         <span>You don't have any flashcards yet</span>
                         <FaRegSadCry />
                     </div>
-                    <div>
+                    <div className="dark:text-dark-normal">
                         Go and create your first flashcard{' '}
-                        <Link to="/new-flashcard" className="text-primary font-bold">
+                        <Link to="/new-flashcard" className="text-primary dark:text-dark-primary font-bold">
                             here
                         </Link>
                     </div>
