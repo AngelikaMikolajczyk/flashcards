@@ -7,15 +7,15 @@ import * as appModule from '../App';
 import * as supabaseClientModule from '../supabaseClient';
 import { useEffect, useState } from 'react';
 
-test('render Categories page', () => {
-    jest.spyOn(supabaseClientModule, 'supabase').mockReturnValue({
-        from() {},
-    });
+// test('render Categories page', () => {
+//     jest.spyOn(supabaseClientModule, 'supabase').mockReturnValue({
+//         from() {},
+//     });
 
-    jest.spyOn(appModule, 'useAuth').mockReturnValue({ isAuth: true, setAuthState: () => null });
-    const history = createMemoryHistory();
+//     jest.spyOn(appModule, 'useAuth').mockReturnValue({ isAuth: true, setAuthState: () => null });
+//     const history = createMemoryHistory();
 
-    render(<Router history={history}>{/* <Categories /> */}</Router>);
+//     render(<Router history={history}>{/* <Categories /> */}</Router>);
 
-    // expect(screen.getByText(/Your FlashCards categories/i)).toBeInTheDocument();
-});
+//     // expect(screen.getByText(/Your FlashCards categories/i)).toBeInTheDocument();
+// });

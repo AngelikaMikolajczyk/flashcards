@@ -163,7 +163,7 @@ function PasswordForm() {
             <Heading variant="normal">New password</Heading>
             <div className="w-4/5">
                 <div className="flex flex-row">
-                    <div className="flex flex-col relative flex-grow">
+                    <div className="flex flex-col relative grow">
                         <input
                             id="newPassword"
                             type={newPasswordVisible}
@@ -211,7 +211,7 @@ export function Account() {
     }
 
     return (
-        <main className="flex flex-grow justify-center items-center">
+        <main className="flex grow justify-center items-center">
             <div className="w-2/5 border-2 border-secondary dark:border-dark-secondary rounded-lg flex flex-col items-start p-11 shadow-lg">
                 <Heading variant="primary">My account</Heading>
                 <div className="py-8 flex flex-col gap-10 w-full">

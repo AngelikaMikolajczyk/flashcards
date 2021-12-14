@@ -169,7 +169,7 @@ export function Categories() {
     }
 
     return (
-        <main className="flex flex-grow flex-col items-center mx-auto pt-14">
+        <main className="flex grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">Your FlashCards categories</Heading>
             {categories.length === 0 ? (
                 <div className="flex flex-col gap-8 my-16 text-xl">

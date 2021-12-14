@@ -114,7 +114,7 @@ export function CreateFlashcard() {
     }, []);
 
     return (
-        <main className="flex flex-grow flex-col items-center mx-auto pt-14">
+        <main className="flex grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">Create FlashCard</Heading>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-10  p-20">

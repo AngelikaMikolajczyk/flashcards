@@ -144,7 +144,7 @@ export function Learning() {
     console.log(currentFlashcard);
 
     return (
-        <main className="flex flex-grow flex-col items-center mx-auto pt-14">
+        <main className="flex grow flex-col items-center mx-auto pt-14">
             <div className="flex justify-between w-full items-end">
                 <Heading variant="primary">Learning:</Heading>
                 <span className="text-secondary dark:text-dark-secondary text-4xl font-bold">{categoryname}</span>
