@@ -37,6 +37,7 @@ const schema = yup
 
 export function Register() {
     const [passwordVisible, setPasswordVisible] = useState('password');
+    const [emailError, setEmailError] = useState<string>();
 
     const history = useHistory();
 
@@ -55,6 +56,13 @@ export function Register() {
                 password: data.password,
             });
             console.log({ user, session, error });
+
+            if (user!.identities.length === 0) {
+                setEmailError('Account with this email already exists');
+            } else {
+                console.log({ user, session, error });
+            }
+
             // user return data like: email, email_change_confirm_status, id
             if (error) throw error;
         } catch (error) {
@@ -103,6 +111,9 @@ export function Register() {
                                 message={errors.email.message}
                             ></ErrorMessage>
                         )}
+                        {emailError ? (
+                            <p className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400">{emailError}</p>
+                        ) : null}
                     </div>
 
                     <div className="w-4/5">

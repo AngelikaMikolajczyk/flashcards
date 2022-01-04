@@ -1,7 +1,6 @@
 TODO
 
 * info po założeniu konta
-* info że konto na dany email istnieje jeśli jest próba rejestracji na emaila który ma konto
 * zmiana podejścia do kontrolowanego inputa categorii
 * przypomnienie hasła
 * właśny komponent dla wyświetlenia front i back inputów
