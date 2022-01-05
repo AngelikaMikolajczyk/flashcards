@@ -10,6 +10,8 @@ import { IconButton } from './IconButton';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Button } from './Button';
 import { User } from '@supabase/supabase-js';
+import { SuccessMessage } from './SuccessMessage';
+import { RequestStatus } from './types';
 
 type EmailFormInputs = {
     email: string;
@@ -43,7 +45,7 @@ const passwordFormSchema = yup
     })
     .required();
 
-const emialDefaultValues = {
+const emailDefaultValues = {
     email: '',
 };
 
@@ -59,8 +61,10 @@ function EmailForm() {
         formState: { errors },
     } = useForm({
         resolver: yupResolver(emailFormSchema),
-        defaultValues: emialDefaultValues,
+        defaultValues: emailDefaultValues,
     });
+
+    const [requestUpdateEmailStatus, setRequestUpdateEmailStatus] = useState<RequestStatus>('idle');
 
     const currentUser = useRef<User | null>(null);
 
@@ -75,16 +79,19 @@ function EmailForm() {
 
     const onSubmit: SubmitHandler<EmailFormInputs> = async (data) => {
         try {
-            let updateError;
-            if (emialDefaultValues.email !== data.email) {
+            if (currentUser.current!.email !== data.email) {
+                setRequestUpdateEmailStatus('pending');
                 const { user, error } = await supabase.auth.update({ email: data.email });
-                updateError = error;
                 console.log({ user, error });
+
+                if (error) throw error;
+
+                setRequestUpdateEmailStatus('success');
             }
-            if (updateError) throw updateError;
         } catch (error) {
             const supabaseError = error as UnknownError;
             console.log(supabaseError.error_description || supabaseError.message);
+            setRequestUpdateEmailStatus('error');
         }
     };
 
@@ -103,16 +110,15 @@ function EmailForm() {
                     Email
                 </label>
 
-                {errors.email && errors.email.message && (
-                    <ErrorMessage
-                        className="text-sm pl-4 pt-1 text-red-600 dark:text-red-400"
-                        message={errors.email.message}
-                    ></ErrorMessage>
-                )}
+                {errors.email && errors.email.message && <ErrorMessage message={errors.email.message} />}
             </div>
             <Button type="submit" variant="primary">
                 Save new email
             </Button>
+            {requestUpdateEmailStatus === 'success' ?? <SuccessMessage message="New email has been saved" />}
+            {requestUpdateEmailStatus === 'error' ?? (
+                <ErrorMessage message="There was an error during updating email" />
+            )}
         </form>
     );
 }
@@ -129,20 +135,23 @@ function PasswordForm() {
         defaultValues: passwordDefaultValues,
     });
 
+    const [requestUpdatePasswordStatus, setRequestUpdatePasswordStatus] = useState<RequestStatus>('idle');
+
     const onSubmit: SubmitHandler<PasswordFormInputs> = async (data) => {
         try {
-            let updateError;
-
             if (data.newPassword !== '') {
+                setRequestUpdatePasswordStatus('pending');
                 const { user, error } = await supabase.auth.update({ password: data.newPassword });
-                updateError = error;
                 console.log({ user, error });
-            }
 
-            if (updateError) throw updateError;
+                if (error) throw error;
+
+                setRequestUpdatePasswordStatus('success');
+            }
         } catch (error) {
             const supabaseError = error as UnknownError;
             console.log(supabaseError.error_description || supabaseError.message);
+            setRequestUpdatePasswordStatus('error');
         }
     };
 
@@ -199,6 +208,15 @@ function PasswordForm() {
             <Button type="submit" variant="primary">
                 Save new password
             </Button>
+            {requestUpdatePasswordStatus === 'success' ? (
+                <SuccessMessage message="New password has been saved!" />
+            ) : null}
+            {requestUpdatePasswordStatus === 'error' ? (
+                <ErrorMessage
+                    message="There was an error during updating password!"
+                    className="bg-red-200 pr-4 pb-2 pt-2 rounded-lg dark:text-red-500"
+                />
+            ) : null}
         </form>
     );
 }

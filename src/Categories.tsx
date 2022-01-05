@@ -6,7 +6,9 @@ import { supabase } from './supabaseClient';
 import { FaLeanpub } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import { IconButton } from './IconButton';
-import { Flashcard, Category } from './types';
+import { Flashcard, Category, RequestStatus } from './types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface FlashcardsCategoryRowProps {
     categoryName: string;
@@ -30,6 +32,15 @@ function FlashcardsCategoryRow({
     onDelete,
     knowingPercentage,
 }: FlashcardsCategoryRowProps) {
+    const notifySuccess = () =>
+        toast.success('Your flashcard category has been deleted successfully with all flashcards within!', {
+            className: () => 'bg-green-50 text-green-700 font-semibold rounded text-center p-1 bg-opacity-90 my-4',
+        });
+    const notifyError = () =>
+        toast.error('There was an error during deleting category!', {
+            className: () => 'bg-red-50 text-red-600 font-semibold rounded text-center p-1 bg-opacity-90 my-4',
+        });
+
     async function handleDeleteCategory() {
         try {
             const { error: flashcardsError } = await supabase.from('flashcards').delete().eq('category_id', categoryId);
@@ -40,10 +51,13 @@ function FlashcardsCategoryRow({
 
             if (error) throw error;
 
+            notifySuccess();
+
             onDelete();
         } catch (error) {
             const supabaseError = error as UnknownError;
             console.log(supabaseError.error_description || supabaseError.message);
+            notifyError();
         }
     }
 
@@ -97,10 +111,13 @@ export function Categories() {
     const [categories, setCategories] = useState<Category[] | undefined>();
     const [flashcards, setFlashcards] = useState<Flashcard[] | undefined>();
     const [dateNow, setDateNow] = useState<Date>(new Date());
+    const [requestCategoriesStatus, setRequestRequestStatus] = useState<RequestStatus>('idle');
 
     useEffect(() => {
         async function fetchCategories() {
             try {
+                setRequestRequestStatus('pending');
+
                 let { data: categoryData, error: categoryError } = await supabase
                     .from('categories')
                     .select('*')
@@ -122,9 +139,12 @@ export function Categories() {
                 if (flashcardsData) {
                     setFlashcards(flashcardsData);
                 }
+
+                setRequestRequestStatus('success');
             } catch (error) {
                 const supabaseError = error as UnknownError;
                 console.log(supabaseError.error_description || supabaseError.message);
+                setRequestRequestStatus('error');
             }
         }
         fetchCategories();
@@ -171,42 +191,68 @@ export function Categories() {
     return (
         <main className="flex grow flex-col items-center mx-auto pt-14">
             <Heading variant="primary">Your FlashCards categories</Heading>
-            {categories.length === 0 ? (
-                <div className="flex flex-col gap-8 my-16 text-xl">
-                    <div className="flex gap-2 items-center dark:text-dark-normal">
-                        <span>You don't have any flashcards yet</span>
-                        <FaRegSadCry />
+            {requestCategoriesStatus === 'success' ? (
+                categories.length === 0 ? (
+                    <div className="flex flex-col gap-8 my-16 text-xl">
+                        <div className="flex gap-2 items-center dark:text-dark-normal">
+                            <span>You don't have any flashcards yet</span>
+                            <FaRegSadCry />
+                        </div>
+                        <div className="dark:text-dark-normal">
+                            Go and create your first flashcard{' '}
+                            <Link to="/new-flashcard" className="text-primary dark:text-dark-primary font-bold">
+                                here
+                            </Link>
+                        </div>
                     </div>
-                    <div className="dark:text-dark-normal">
-                        Go and create your first flashcard{' '}
-                        <Link to="/new-flashcard" className="text-primary dark:text-dark-primary font-bold">
-                            here
-                        </Link>
+                ) : (
+                    <div className="my-10">
+                        <ul className="flex flex-col border-2 border-primary dark:border-dark-primary">
+                            {categories.map((category) => {
+                                return (
+                                    <FlashcardsCategoryRow
+                                        categoryName={category.name}
+                                        categoryId={category.id}
+                                        categoryValue={flashcardsCount[category.id] ?? 0}
+                                        unit={
+                                            flashcardsCount
+                                                ? flashcardsCount[category.id] === 1
+                                                    ? 'item'
+                                                    : 'items'
+                                                : null
+                                        }
+                                        key={category.id}
+                                        onDelete={updateDateState}
+                                        knowingPercentage={
+                                            flashcardsKnowledgeLevel[category.id]
+                                                ? knowingPercentageCount(category.id)
+                                                : 0
+                                        }
+                                    />
+                                );
+                            })}
+                        </ul>
                     </div>
+                )
+            ) : null}
+            {requestCategoriesStatus === 'error' ? (
+                <div className="flex flex-col gap-8 my-16 text-xl dark:text-dark-normal items-center">
+                    <div className="flex gap-2 items-center">
+                        An error occured while downloading your flashcards <FaRegSadCry />
+                    </div>
+                    <div>Please try again later...</div>
                 </div>
-            ) : (
-                <div className="my-10">
-                    <ul className="flex flex-col border-2 border-primary dark:border-dark-primary">
-                        {categories.map((category) => {
-                            return (
-                                <FlashcardsCategoryRow
-                                    categoryName={category.name}
-                                    categoryId={category.id}
-                                    categoryValue={flashcardsCount[category.id] ?? 0}
-                                    unit={
-                                        flashcardsCount ? (flashcardsCount[category.id] === 1 ? 'item' : 'items') : null
-                                    }
-                                    key={category.id}
-                                    onDelete={updateDateState}
-                                    knowingPercentage={
-                                        flashcardsKnowledgeLevel[category.id] ? knowingPercentageCount(category.id) : 0
-                                    }
-                                />
-                            );
-                        })}
-                    </ul>
-                </div>
-            )}
+            ) : null}
+            <ToastContainer
+                position="bottom-center"
+                autoClose={2500}
+                hideProgressBar={true}
+                closeOnClick={false}
+                closeButton={false}
+                toastClassName={() =>
+                    'bg-primary dark:bg-dark-primary text-white font-semibold rounded text-center p-1 bg-opacity-90'
+                }
+            />
         </main>
     );
 }

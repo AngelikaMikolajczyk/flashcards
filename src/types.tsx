@@ -11,3 +11,5 @@ export type Category = {
     id: number;
     name: string;
 };
+
+export type RequestStatus = 'idle' | 'pending' | 'success' | 'error';

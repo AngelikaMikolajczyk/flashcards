@@ -20,3 +20,6 @@ TODO
 * feat - typy dla wszystkich plików
 * eliminacja error message przy inputach po dodaniu nowej fiszki
 * poprawa wysokości obrazku w home
+* react icon dla error message
+* toster zamiast statusu w Account na zmianę maila lub hasła
+* zrobić toaster do loadingu na pending status
